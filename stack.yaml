@@ -1,0 +1,38 @@
+version: "3.3"
+
+services:
+  neo4j:
+    environment:
+      NEO4J_AUTH: none
+    image: neo4j:latest
+    container_name: neo4j
+    volumes:
+      - ~/volumes/databases/neo4j/:/data
+    ports:
+      - "7474:7474/tcp"
+      - "7687:7687/tcp"
+    deploy:
+      replicas: 1
+    networks:
+     - netstack
+      
+  friend:
+    image: friend     
+    build: ./friend
+    container_name: friend
+    env_file: 
+      - .env
+    environment:
+      - NEO4J_HOST_URI:${NEO4J_HOST_URI}
+    links:
+      - neo4j
+    ports:
+      - 9090:9090     
+    deploy:
+      replicas: 1
+    networks:
+     - netstack
+     
+networks:
+  netstack:
+    driver: overlay

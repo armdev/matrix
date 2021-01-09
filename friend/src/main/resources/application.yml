@@ -1,0 +1,8 @@
+db_url: ${NEO4J_HOST_URI:localhost}
+spring:
+    data:
+     neo4j:
+       uri: bolt://${db_url:localhost}:7687
+      
+server:
+    port: 9090
