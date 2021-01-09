@@ -17,7 +17,7 @@ Build and run friend microservice from your dev IDE
 Access: http://192.168.1.7:9090/swagger-ui.html # your host IP
 Database: http://192.168.1.7:7474/browser/ # your host ip
 
-2. Run with docker compose:
+2. Run with docker stack:
 Start Database: ./run_stack.sh
 Build and run friend microservice from your dev IDE
 Access: http://192.168.1.7:9090/swagger-ui.html # your host IP
