@@ -6,7 +6,8 @@
     <version>1.0</version>
     <packaging>pom</packaging>
     <modules>        
-        <module>friend</module>       
+        <module>friend</module> 
+        <module>account</module>       
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

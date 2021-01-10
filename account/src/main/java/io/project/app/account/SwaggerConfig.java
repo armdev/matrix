@@ -1,4 +1,4 @@
-package io.project.app.friend.friend;
+package io.project.app.account;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +20,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Friend API")
+                .title("Account API")
                 .description("From Zero to Hero ")
                 .termsOfServiceUrl("http://www-03.ibm.com/software/sla/sladb.nsf/sla/bm?Open")
                 .contact(new Contact("Armen Arzumanyan", "", ""))
@@ -33,7 +33,7 @@ public class SwaggerConfig {
     @Bean
     public Docket personApi() {
         return new Docket(DocumentationType.SWAGGER_2).enable(true)
-                .groupName("Friend API")
+                .groupName("Account API")
                 .apiInfo(apiInfo())
                 .select()
                 .paths(regex("/api.*"))

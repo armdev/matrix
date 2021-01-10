@@ -15,41 +15,11 @@ management:
     cors:
       allowed-origins: 'true'
       enabled-by-default: 'false'
-
-
-db_url: ${NEO4J_HOST_URI:localhost}
-
-spring:
     
-  main:
-    allow-bean-definition-overriding: true
-  application:
-    name: friend
-    
-    
-  cloud:
-    discovery:
-       service-id: friend
-       enabled: true
-       
-  servlet:
-    multipart:
-        max-file-size: 5MB
-        max-request-size: 5MB
-        enabled: true
-
-  jackson:
-    serialization:
-      write_dates_as_timestamps: false
-
-  data:
-    neo4j:
-       uri: bolt://${db_url:localhost}:7687
-      
 server:
     http2:
       enabled: true
-    port: 9090
+    port: 9091
     servlet:
       session:
         timeout: 600s
@@ -63,6 +33,41 @@ server:
       enabled: true
       mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
       min-response-size: 1024
+    
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: account
+    
+    
+  cloud:
+    discovery:
+       service-id: account
+       enabled: true
+    gateway:
+      httpclient:
+       response-timeout: 10s  
+      discovery:
+        locator:
+          enabled: true
+
+       
+  servlet:
+    multipart:
+        max-file-size: 5MB
+        max-request-size: 5MB
+        enabled: true
+
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+
+    
+  data:
+    mongodb:   
+      uri: mongodb://DonDev:BC2022@mongodb:27017/accountDB?ssl=false&connectTimeoutMS=300000&minPoolSize=0&maxPoolSize=100&maxIdleTimeMS=900000&readPreference=primaryPreferred&authSource=admin
+    
 
 eureka:
   client:
@@ -77,8 +82,8 @@ eureka:
     service-url:
       defaultZone: http://admin:admin@eureka:8761/eureka/
   instance:
-    appname: friend
-    instanceId: friend:${spring.application.instance-id:${random.value}}
+    appname: account
+    instanceId: account:${spring.application.instance-id:${random.value}}
     lease-renewal-interval-in-seconds: 5
     lease-expiration-duration-in-seconds: 10
     status-page-url-path: ${management.endpoints.web.base-path}/info

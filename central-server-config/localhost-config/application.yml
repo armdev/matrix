@@ -1,0 +1,15 @@
+# Common configuration shared between all applications
+configserver:
+  name: Docker HiCare Registry
+  status: Connected to the HiCare Registry running in Docker
+
+jhipster:
+  security:
+    authentication:
+      jwt:
+        secret: OTI5ZjY2MjU3YTBmNmQ4MTc2YmM1NzFlOGY1NjgwZmFlYzhiOTc4MWUwZTIxNTY1NmFhMWIxNTVlOGZkNWQxYWY2NDE5ZDMwZWZlZmMxODY2N2Y5Mzc1ZDczMGNhYzIzNmE3MmYyODY3M2M5OGNmNzViODFlOWNiMWY2NzYwMmE=
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:8761/eureka/

@@ -1,6 +1,44 @@
 version: "3.3"
 
 services:
+    
+  mongodb:      
+    build: ./mongodb
+    image: mongodb
+    container_name: mongodb    
+    volumes:
+      - ~/volumes/databases/mongo/data:/data/db
+      - ~/volumes/databases/mongo/logs:/data/logs
+    ports:
+      - 27017:27017
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_PASSWORD=BC2022
+      - MONGO_INITDB_ROOT_USERNAME=DonDev
+    command: mongod
+    networks:
+      mnet:
+        aliases:
+          - mongodb
+    
+  eureka:
+    image: jhipster/jhipster-registry:v6.3.0
+    container_name: eureka
+    volumes:
+      - ./central-server-config:/central-config
+    environment:
+      - _JAVA_OPTIONS=-Xmx1024m -Xms1024m
+      - SPRING_PROFILES_ACTIVE=default
+      - SPRING_SECURITY_USER_PASSWORD=admin
+      - JHIPSTER_REGISTRY_PASSWORD=admin
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=./central-config/localhost-config/ 
+    ports:
+      - 8761:8761
+
+    networks:
+      - mnet
+      
   neo4j:
     environment:
       NEO4J_AUTH: none
@@ -27,6 +65,23 @@ services:
       - neo4j
     ports:
       - 9090:9090     
+    deploy:
+      replicas: 1
+    networks:
+     - mnet
+     
+  account:
+    image: account     
+    build: ./account
+    container_name: account
+    env_file: 
+      - .env
+    environment:
+      - NEO4J_HOST_URI:${NEO4J_HOST_URI}
+    links:
+      - mongodb
+    ports:
+      - 9091:9091     
     deploy:
       replicas: 1
     networks:
