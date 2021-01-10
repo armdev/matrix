@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,11 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @author root
  */
 @RestController
-@RequestMapping("/api/v2/photos")
+@RequestMapping("/api/v2/accounts")
 @Slf4j
-public class PhotoController {
+public class AccountController {
 
-    @Autowired
     private PhotoService photoService;
 
     @PutMapping

@@ -29,7 +29,7 @@ public class Photo implements Serializable {
     @Id
     private String id;
     
-    @Indexed
+    @Indexed(unique = true)
     private String userId;
 
     private Binary image;
