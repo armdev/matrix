@@ -1,6 +1,5 @@
 package io.project.app.api.responses;
 
-import io.project.app.api.requests.*;
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -5,7 +5,9 @@
  */
 package io.project.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -13,6 +15,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -40,7 +43,11 @@ public class Photo implements Serializable {
 
     private Long fileSize;
 
-    private Date uploadDate;
+    private Date uploadDate;    
+    
+    @LastModifiedDate
+    @JsonIgnore
+    private Instant lastModifiedDate = Instant.now();
 
     public Photo(String fileName) {
         this.fileName = fileName;

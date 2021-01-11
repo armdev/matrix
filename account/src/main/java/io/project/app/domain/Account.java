@@ -1,12 +1,15 @@
 package io.project.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -26,7 +29,7 @@ public class Account implements Serializable {
 
     @Id
     private String id;
-    
+
     private String name;
 
     @Indexed(unique = true)
@@ -34,5 +37,8 @@ public class Account implements Serializable {
 
     private String password;
 
+    @LastModifiedDate
+    @JsonIgnore
+    private Instant lastModifiedDate = Instant.now();
 
 }

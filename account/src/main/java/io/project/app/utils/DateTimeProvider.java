@@ -122,8 +122,6 @@ public class DateTimeProvider {
 
         return lastDayOfMonth;
     }
-    
-    
 
     public static int getLastDayOfCurrentMonth(int year) {
 

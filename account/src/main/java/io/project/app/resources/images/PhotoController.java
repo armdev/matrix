@@ -1,4 +1,4 @@
-package io.project.app.resources;
+package io.project.app.resources.images;
 
 import io.micrometer.core.annotation.Timed;
 import io.project.app.domain.Photo;
@@ -11,6 +11,7 @@ import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,7 +35,7 @@ public class PhotoController {
     @Autowired
     private PhotoService photoService;
 
-    @PutMapping
+    @PutMapping(path = "/insert", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @CrossOrigin
     @Transactional
@@ -64,7 +65,7 @@ public class PhotoController {
         return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(("Could not save file"));
     }
 
-    @GetMapping("/account/avatar")
+    @GetMapping(path = "/account/avatar", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @CrossOrigin
     @Timed
@@ -80,7 +81,7 @@ public class PhotoController {
         return ResponseEntity.status(HttpStatus.OK).body(userFile);
     }
 
-    @GetMapping("/account/avatar/user/id")
+    @GetMapping(path = "/account/avatar/user/id", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @CrossOrigin
     @Timed

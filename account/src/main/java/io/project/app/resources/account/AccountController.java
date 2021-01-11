@@ -1,4 +1,4 @@
-package io.project.app.resources;
+package io.project.app.resources.account;
 
 import io.project.app.services.AccountService;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +17,7 @@ import io.project.app.api.requests.RegisterRequest;
 import java.util.Optional;
 import io.project.app.api.responses.ApiAccountResponse;
 import io.project.app.domain.Account;
+import org.springframework.http.MediaType;
 
 /**
  *
@@ -30,7 +31,7 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @PutMapping("/login")
+    @PutMapping(path = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @CrossOrigin
     @Transactional
@@ -41,14 +42,12 @@ public class AccountController {
         Optional<ApiAccountResponse> doLogin = accountService.doLogin(loginRequest);
         if (doLogin.isPresent()) {
             log.info("Login success");
-            return ResponseEntity.status(HttpStatus.OK).body(doLogin.get());
+            return ResponseEntity.ok().header("Authorization", doLogin.get().getToken()).body(doLogin.get());
         }
-
-        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(("Could not save file"));
+        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(("Could not login account"));
     }
-    
-    
-    @PutMapping("/register")
+
+    @PutMapping(path = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @CrossOrigin
     @Transactional
@@ -62,7 +61,7 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.OK).body(doRegister.get());
         }
 
-        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(("Could not save file"));
+        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(("Could not register user"));
     }
 
 }

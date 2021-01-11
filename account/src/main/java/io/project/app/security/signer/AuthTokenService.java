@@ -25,6 +25,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import java.security.Key;
+import java.time.ZoneOffset;
 
 import org.springframework.stereotype.Service;
 
@@ -55,7 +56,7 @@ public class AuthTokenService {
 
     @Autowired
     private TimeProvider timeProvider;
-    
+
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     private final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
@@ -103,37 +104,43 @@ public class AuthTokenService {
         return claims;
     }
 
-    public Boolean validateToken(HttpServletRequest request) {
+    public Boolean validateToken(String token) {
+        log.error("Token: " + token);
+        final Optional<String> email = this.fetchEmailFromToken(token);
 
-        String token = this.getToken(request);
-
-        if (token == null) {
-            log.error("Could not find token from headers");
+        if (!email.isPresent()) {
+            log.error("Could not fetch email from token");
             return false;
         }
 
-        final Optional<String> username = this.fetchUsernameFromToken(token);
+        // final Date created = this.getIssuedAtDateFromToken(token);
+        final Date exiration = this.getExpirationFromToken(token);
 
-        if (!username.isPresent()) {
-            return false;
-        }
-
-        final Date created = getIssuedAtDateFromToken(token);
-
-        final Date exiration = getExpirationFromToken(token);
-
-        Date currentDate = timeProvider.now();
-
+        Date currentDate = Date.from(java.time.ZonedDateTime.now(ZoneOffset.UTC).toInstant());
         if (exiration.getTime() > 0) {
             if (exiration.getTime() < currentDate.getTime()) {
-
+                log.error("CurrentDate.getTime() " + currentDate.getTime());
+                log.error("Exiration.getTime() " + exiration.getTime());
+                log.error("Token expired");
                 return false;
             } else {
-                log.info("You can use token, it is valid");
+                //og.info("You can use token");
                 return true;
             }
         }
         return false;
+    }
+
+    public Optional<String> fetchEmailFromToken(String token) {
+        Credentials credentials;
+        try {
+            final Claims claims = this.getAllClaimsFromToken(token);
+            credentials = GsonConverter.fromJson(claims.getSubject(), Credentials.class);
+            log.info("Credentials found " + credentials.toString());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(credentials.getEmail());
     }
 
     private String generateAudience(Device device) {
@@ -160,18 +167,6 @@ public class AuthTokenService {
 
     private Boolean isCreatedBeforeLastPasswordReset(Date created, Date lastPasswordReset) {
         return (lastPasswordReset != null && created.before(lastPasswordReset));
-    }
-
-    public Optional<String> fetchUsernameFromToken(String token) {
-        Credentials credentials;
-        try {
-            final Claims claims = this.getAllClaimsFromToken(token);
-
-            credentials = GsonConverter.fromJson(claims.getSubject(), Credentials.class);
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-        return Optional.ofNullable(credentials.getEmail());
     }
 
     private Optional<Credentials> fetchCredentialsFromToken(String token) {

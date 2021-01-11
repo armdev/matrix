@@ -1,7 +1,7 @@
 # Common configuration shared between all applications
 configserver:
-  name: Docker HiCare Registry
-  status: Connected to the HiCare Registry running in Docker
+  name: Docker Matrix Registry
+  status: Connected to the Matrix Registry running in Docker
 
 jhipster:
   security:
