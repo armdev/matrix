@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +32,8 @@ public class PersonResource {
     @GetMapping(path = "/person/one", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     @Timed
-    public ResponseEntity<?> get(@RequestParam(required = true) String personId
+    public ResponseEntity<?> get(@RequestParam(required = true) String personId,
+            @RequestHeader(name = "Authorization") String token
     ) {
         log.info("find person by id");
         Optional<Person> account = friendService.findPerson(personId);
@@ -44,7 +46,7 @@ public class PersonResource {
     @GetMapping(path = "/person/all/data", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     @Timed
-    public ResponseEntity<?> fetch() {
+    public ResponseEntity<?> fetch(@RequestHeader(name = "Authorization") String token) {
         log.info("find all");
         List<Person> accountList = friendService.findAll();
         PersonResponse personResponse = new PersonResponse();
@@ -57,7 +59,7 @@ public class PersonResource {
     @PostMapping(path = "/person/add", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     @Timed
-    public ResponseEntity<?> post(@RequestBody PersonDTO personDTO
+    public ResponseEntity<?> post(@RequestBody PersonDTO personDTO, @RequestHeader(name = "Authorization") String token
     ) {
         log.info("Add New Person");
         Optional<Person> account = friendService.findPersonByEmail(personDTO.getEmail());
@@ -79,7 +81,8 @@ public class PersonResource {
     @PostMapping(path = "/person/add/friend", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     @Timed
-    public ResponseEntity<?> join(@RequestParam(required = true) String personId, @RequestParam(required = true) String friendId
+    public ResponseEntity<?> join(@RequestParam(required = true) String personId,
+            @RequestParam(required = true) String friendId, @RequestHeader(name = "Authorization") String token
     ) {
 
         boolean addFriend = friendService.addFriend(personId, friendId);

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,6 +41,7 @@ public class PhotoController {
     @CrossOrigin
     @Transactional
     public ResponseEntity<?> put(
+            @RequestHeader(name = "Authorization") String token,
             @RequestBody(required = true) FileRequest fileDTO
     ) {
 
@@ -70,6 +72,7 @@ public class PhotoController {
     @CrossOrigin
     @Timed
     public ResponseEntity<?> fetch(
+            @RequestHeader(name = "Authorization") String token,
             @RequestParam(name = "id", required = true) String id
     ) {
 
@@ -86,6 +89,7 @@ public class PhotoController {
     @CrossOrigin
     @Timed
     public ResponseEntity<?> get(
+            @RequestHeader(name = "Authorization") String token,
             @RequestParam(name = "userId", required = true) String userId
     ) {
 

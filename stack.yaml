@@ -52,6 +52,27 @@ services:
       replicas: 1
     networks:
      - netstack
+     
+  gateway:
+    image: gateway
+    build: ./gateway
+    container_name: gateway
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    links:
+      - account
+      - friend    
+    depends_on:  
+      - eureka    
+    ports:
+      - '2022:2022'   
+    networks:
+      - netstack
       
   friend:
     image: friend     
@@ -64,7 +85,11 @@ services:
     links:
       - neo4j
     ports:
-      - 9090:9090     
+      - 9090:9090
+    depends_on:  
+      - eureka
+      - neo4j
+      - mongodb
     deploy:
       replicas: 1
     networks:
@@ -81,7 +106,11 @@ services:
     links:
       - mongodb
     ports:
-      - 9091:9091     
+      - 9091:9091
+    depends_on:  
+      - eureka
+      - neo4j
+      - mongodb
     deploy:
       replicas: 1
     networks:

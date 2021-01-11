@@ -8,7 +8,7 @@ docker-compose down
 echo "Start all containers"
 docker-compose  up -d --build
 echo "New Release is Ready"
-docker logs --follow friend
+docker logs --follow gateway
 
 
 

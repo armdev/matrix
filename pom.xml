@@ -6,6 +6,7 @@
     <version>1.0</version>
     <packaging>pom</packaging>
     <modules>        
+        <module>gateway</module> 
         <module>friend</module> 
         <module>account</module>       
     </modules>
