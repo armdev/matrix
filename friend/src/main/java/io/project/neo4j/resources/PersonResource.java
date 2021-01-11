@@ -31,7 +31,7 @@ public class PersonResource {
     @GetMapping(path = "/person/one", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     @Timed
-    public ResponseEntity<?> get(@RequestParam(required = true) Long personId
+    public ResponseEntity<?> get(@RequestParam(required = true) String personId
     ) {
         log.info("find person by id");
         Optional<Person> account = friendService.findPerson(personId);
@@ -79,7 +79,7 @@ public class PersonResource {
     @PostMapping(path = "/person/add/friend", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     @Timed
-    public ResponseEntity<?> join(@RequestParam(required = true) Long personId, @RequestParam(required = true) Long friendId
+    public ResponseEntity<?> join(@RequestParam(required = true) String personId, @RequestParam(required = true) String friendId
     ) {
 
         boolean addFriend = friendService.addFriend(personId, friendId);

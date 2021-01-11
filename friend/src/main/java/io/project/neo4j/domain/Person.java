@@ -21,6 +21,8 @@ public class Person implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
+    
+    private String userId;
 
     private String name;
 

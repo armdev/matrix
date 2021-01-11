@@ -9,7 +9,9 @@ import io.project.neo4j.domain.Person;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
@@ -18,6 +20,9 @@ import lombok.ToString;
  */
 @Data
 @ToString
-public class PersonResponse implements Serializable{
+@AllArgsConstructor
+@NoArgsConstructor
+public class PersonResponse implements Serializable {
+
     private List<Person> persons = new ArrayList<>();
 }

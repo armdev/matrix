@@ -17,7 +17,8 @@ import org.springframework.data.neo4j.core.schema.Id;
 public class Friend implements Serializable {
 
     @Id
-    private Long id;
+    private Long id;    
+    private String userId;
     private String name;
     private String email;
 

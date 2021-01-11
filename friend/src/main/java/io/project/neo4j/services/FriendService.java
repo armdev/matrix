@@ -20,8 +20,8 @@ public class FriendService {
         return personRepository.save(person);
     }
 
-    public Optional<Person> findPerson(Long personId) {
-        return personRepository.findById(personId);
+    public Optional<Person> findPerson(String personId) {
+        return personRepository.findByUserId(personId);
     }
 
     public Optional<Person> findPersonByEmail(String email) {
@@ -32,19 +32,20 @@ public class FriendService {
         return personRepository.findAll();
     }
 
-    public boolean addFriend(Long personId, Long friendId) {
-        Optional<Person> person = personRepository.findById(personId);
+    public boolean addFriend(String personId, String friendId) {
+        
+        Optional<Person> person = personRepository.findByUserId(personId);
 
-        Optional<Person> friend = personRepository.findById(friendId);
+        Optional<Person> friend = personRepository.findByUserId(friendId);
 
         if (person.isPresent() && friend.isPresent()) {
 
             Person currentPerson = person.get();
-            currentPerson.getFriends().add(new Friend(friend.get().getId(), friend.get().getName(), friend.get().getEmail()));
+            currentPerson.getFriends().add(new Friend(friend.get().getId(), friend.get().getUserId(), friend.get().getName(), friend.get().getEmail()));
             Person save = personRepository.save(currentPerson);
 
             Person currentFriend = friend.get();
-            currentFriend.getFriends().add(new Friend(save.getId(), save.getName(), save.getEmail()));
+            currentFriend.getFriends().add(new Friend(save.getId(), save.getUserId(), save.getName(), save.getEmail()));
             personRepository.save(currentFriend);
 
             return true;
@@ -53,10 +54,10 @@ public class FriendService {
         return false;
     }
 
-    public boolean removeFriend(Long personId, Long friendId) {
-        Optional<Person> person = personRepository.findById(personId);
+    public boolean removeFriend(String personId, String friendId) {
+        Optional<Person> person = personRepository.findByUserId(personId);
 
-        Optional<Person> friend = personRepository.findById(friendId);
+        Optional<Person> friend = personRepository.findByUserId(friendId);
 
         if (person.isPresent() && friend.isPresent()) {
             Person currentPerson = person.get();
