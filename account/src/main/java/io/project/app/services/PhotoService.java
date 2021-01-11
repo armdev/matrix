@@ -6,7 +6,7 @@
 package io.project.app.services;
 
 import io.project.app.domain.Photo;
-import io.project.app.dto.FileRequest;
+import io.project.app.api.requests.FileRequest;
 import io.project.app.repositories.PhotoRepository;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;

@@ -1,11 +1,13 @@
-package io.project.app.dto;
+package io.project.app.api.responses;
 
+import io.project.app.api.requests.*;
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import io.project.app.domain.Account;
 
 /**
  *
@@ -16,12 +18,14 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @AllArgsConstructor
-public class LoginRequest implements Serializable {
+public class ApiAccountResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String email;
+    private Account account = new Account();
 
-    private String password;
+    private String token;
+    
+    
 
 }

@@ -6,13 +6,18 @@
 package io.project.app.services;
 
 import io.project.app.domain.Account;
-import io.project.app.dto.LoginRequest;
+import io.project.app.api.requests.LoginRequest;
 import io.project.app.repositories.AccountRepository;
+import io.project.app.security.signer.AuthTokenService;
+
 import io.project.app.utils.PasswordHashUtil;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import io.project.app.api.requests.Device;
+import io.project.app.api.responses.ApiAccountResponse;
+import io.project.app.api.requests.RegisterRequest;
 
 /**
  *
@@ -24,23 +29,35 @@ public class AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
+    
+    @Autowired
+    private AuthTokenService authTokenService;
 
-    public Optional<Account> registerAccount(Account account) {
-        Optional<Account> existingAccount = accountRepository.findByEmail(account.getEmail());
+    public Optional<Account> registerAccount(RegisterRequest registerRequest) {
+        Optional<Account> existingAccount = accountRepository.findByEmail(registerRequest.getEmail());
         if (!existingAccount.isPresent()) {
-            account.setPassword(PasswordHashUtil.hashPassword(account.getPassword(), account.getPassword()));
-            Account save = accountRepository.save(account);
+            registerRequest.setPassword(PasswordHashUtil.hashPassword(registerRequest.getPassword(), registerRequest.getPassword()));
+            Account newAccount = new Account();
+            newAccount.setEmail(registerRequest.getEmail());
+            newAccount.setPassword(registerRequest.getPassword());
+            newAccount.setName(registerRequest.getName());
+            Account save = accountRepository.save(newAccount);
             return Optional.ofNullable(save);
         }
         return Optional.empty();
     }
 
-    public Optional<Account> doLogin(LoginRequest loginRequest) {
+    public Optional<ApiAccountResponse> doLogin(LoginRequest loginRequest) {
 
         Optional<Account> account = accountRepository.findByEmailAndPassword(loginRequest.getEmail(), PasswordHashUtil.hashPassword(loginRequest.getPassword(),
-                loginRequest.getPassword()));
-        if (account.isPresent()) {
-            return account;
+                loginRequest.getPassword()));        
+        
+        if (account.isPresent()) {            
+            String generateToken = authTokenService.generateToken(account.get(), new Device(true, false, false));
+            ApiAccountResponse apiAccountResponse = new ApiAccountResponse();
+            apiAccountResponse.setToken(generateToken);
+            apiAccountResponse.setAccount(account.get());
+            return Optional.of(apiAccountResponse);
         }
 
         return Optional.empty();

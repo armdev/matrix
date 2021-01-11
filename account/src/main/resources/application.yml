@@ -1,3 +1,9 @@
+jwt:
+  header: Authorization
+  expires_in: 525601 # 12 month in minutes
+  mobile_expires_in: 525601 # 12 month in minutes
+  secret: supersecret2025
+
 management:
   endpoint:    
     health:
