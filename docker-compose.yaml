@@ -116,6 +116,27 @@ services:
     networks:
      - mnet
      
+  producer:
+    image: producer
+    build: ./producer
+    container_name: producer
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    links:
+      - mongodb     
+    depends_on:      
+      - mongodb       
+    ports:
+      - '9092:9092'
+    volumes:
+      - /opt/producer/logs/:/opt/producer/logs
+    networks:
+      - mnet
+     
 networks:
   mnet:
     driver: bridge

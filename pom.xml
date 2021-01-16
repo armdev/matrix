@@ -8,7 +8,8 @@
     <modules>        
         <module>gateway</module> 
         <module>friend</module> 
-        <module>account</module>       
+        <module>account</module> 
+        <module>producer</module>       
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

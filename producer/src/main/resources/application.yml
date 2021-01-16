@@ -1,0 +1,87 @@
+management:
+  endpoint:    
+    health:
+      enabled: true
+      show-details: always
+  endpoints:
+    jmx:
+      exposure:
+       include: '*'
+    web:
+     base-path: /management
+     exposure:
+      include: '*'
+      base-path: /actuator
+    cors:
+      allowed-origins: 'true'
+      enabled-by-default: 'false'
+    
+server:
+    http2:
+      enabled: true
+    port: 9092 
+    compression:
+      enabled: true
+      mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+      min-response-size: 1024
+    
+spring:
+  rsocket:
+    server:
+      port: 2050
+      mapping-path: /rsocket
+      transport: TCP
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: producer
+    
+    
+  cloud:
+    discovery:
+       service-id: producer
+       enabled: true
+    gateway:
+      httpclient:
+       response-timeout: 10s  
+      discovery:
+        locator:
+          enabled: true
+
+       
+  servlet:
+    multipart:
+        max-file-size: 5MB
+        max-request-size: 5MB
+        enabled: true
+
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+
+eureka:
+  client:
+    prefer-ip-address: true
+    enabled: true
+    healthcheck:
+      enabled: true
+    fetch-registry: true
+    register-with-eureka: true
+    instance-info-replication-interval-seconds: 10
+    registry-fetch-interval-seconds: 10
+    service-url:
+      defaultZone: http://admin:admin@eureka:8761/eureka/
+  instance:
+    appname: producer
+    instanceId: producer:${spring.application.instance-id:${random.value}}
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+    status-page-url-path: ${management.endpoints.web.base-path}/info
+    health-check-url-path: ${management.endpoints.web.base-path}/health
+    metadata-map:
+      zone: primary # This is needed for the load balancer
+      profile: ${spring.profiles.active}
+      version: #project.version#
+      git-version: ${git.commit.id.describe:}
+      git-commit: ${git.commit.id.abbrev:}
+      git-branch: ${git.branch:}
