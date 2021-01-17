@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+    
+    <name>chat_billion</name>
+    
+    <lifecycle>      
+        <phase-listener>
+            io.project.app.security.AuthenticationPhaseListener
+        </phase-listener>
+    </lifecycle>
+    
+    <component>
+        <component-type>org.primefaces.component.DiamondMenu</component-type>
+        <component-class>org.primefaces.diamond.component.DiamondMenu</component-class>
+    </component>
+    
+    <render-kit>
+        <renderer>
+            <component-family>org.primefaces.component</component-family>
+            <renderer-type>org.primefaces.component.DiamondMenuRenderer</renderer-type>
+            <renderer-class>org.primefaces.diamond.component.DiamondMenuRenderer</renderer-class>
+        </renderer>
+    </render-kit>
+    
+    <application>
+        <locale-config>
+            <default-locale>en</default-locale>   
+            <!--            <default-locale>hy</default-locale>      
+            <supported-locale>hy_HY</supported-locale>  
+            <supported-locale>en_EN</supported-locale>  
+            <supported-locale>ru_RU</supported-locale>            -->
+        </locale-config>    
+        <resource-bundle>
+            <base-name>i18n</base-name>
+            <var>i18n</var>        
+        </resource-bundle>  
+        <resource-bundle>
+            <base-name>path</base-name>
+            <var>path</var>        
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>access</base-name>
+            <var>accessProp</var>
+        </resource-bundle>       
+        <message-bundle>
+            messages
+        </message-bundle>      
+    </application>    
+    <navigation-rule>
+        <from-view-id>*</from-view-id>        
+        <navigation-case>
+            <from-outcome>profile</from-outcome>
+            <to-view-id>/pages/profile/profile.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>         
+        <navigation-case>
+            <from-outcome>changePassword</from-outcome>
+            <to-view-id>/pages/profile/password.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case> 
+      
+        <navigation-case>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case> 
+              
+        <navigation-case>
+            <from-outcome>error</from-outcome>
+            <to-view-id>/error.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>          
+       
+        <navigation-case>
+            <from-outcome>error</from-outcome>
+            <to-view-id>/error.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+     
+                   
+    </navigation-rule>  
+    
+</faces-config>

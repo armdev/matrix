@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/home/armena/Documents/projects/diamond_prime/tag/../../../../Downloads/codes/xml/icd10cm_tabular_2019.xml" uri="src/main/resources/jaxb/codes/icd10cm_tabular_2019.xml"/>
+</catalog>

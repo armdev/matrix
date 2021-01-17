@@ -1,0 +1,134 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div class="layout-topbar">
+        <div class="topbar-left">
+            <a tabindex="0" class="menu-button">
+                <i class="pi pi-chevron-left"></i>
+            </a>
+            <span class="topbar-separator"></span>
+            <span class="viewname">#{viewname}</span>
+            <p:graphicImage  styleClass="mobile-logo" name="images/#{guestPreferences.scheme eq 'light' ? 'logo-dark.svg' : 'logo-white.svg'}" library="diamond-layout" />
+        </div>
+
+        <div class="topbar-right">
+            <ul class="topbar-menu">
+                <li class="search-item">
+                    <a tabindex="0">
+                        <i class="pi pi-search"></i>
+                    </a>
+                </li>
+                <li class="notifications-item">
+                    <a tabindex="0">
+                        <i class="pi pi-bell"></i>
+                        <span class="topbar-badge">5</span>
+                    </a>
+                    <ul class="notifications-menu">
+                        <li>
+                            <a tabindex="0">
+                                <i class="pi pi-shopping-cart"></i>
+                                <div class="notification-item">
+                                    <div class="notification-summary">New Order</div>
+                                    <div class="notification-detail">You have <strong>3</strong> new orders.</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a tabindex="0">
+                                <i class="pi pi-check-square"></i>
+                                <div class="notification-item">
+                                    <div class="notification-summary">Withdrawn Completed</div>
+                                    <div class="notification-detail">Funds are on their way.</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a tabindex="0">
+                                <i class="pi pi-chart-line"></i>
+                                <div class="notification-item">
+                                    <div class="notification-summary">Monthly Reports</div>
+                                    <div class="notification-detail">New reports are ready.</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a tabindex="0">
+                                <i class="pi pi-comments"></i>
+                                <div class="notification-item">
+                                    <div class="notification-summary">Comments</div>
+                                    <div class="notification-detail"><strong>2</strong> new comments.</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a tabindex="0">
+                                <i class="pi pi-exclamation-circle"></i>
+                                <div class="notification-item">
+                                    <div class="notification-summary">Chargeback Request</div>
+                                    <div class="notification-detail"><strong>1</strong> to review.</div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="profile-item">
+
+                    <a href="#">                        
+                        <p:graphicImage url="/PreviewImage?fileId=#{sessionContext.userAvatarId}"
+                                        rendered="#{sessionContext.userAvatarId != null}" style="border-radius: 50%;"
+                                        width="40px" height="40px"/>
+
+                        <p:graphicImage value="/resources/female.jpeg"
+                                        rendered="#{sessionContext.userAvatarId == null and sessionContext.user.gender == 'Female'}"
+                                        style="border-radius: 50%;"
+                                        width="40px" height="40px"/>
+                        <p:graphicImage value="/resources/male.jpeg"
+                                        rendered="#{sessionContext.userAvatarId == null and sessionContext.user.gender == 'Male'}"
+                                        style="border-radius: 50%;"
+                                        width="40px" height="40px"/>
+
+                        <p:graphicImage value="/resources/male.jpeg"
+                                        rendered="#{sessionContext.userAvatarId == null and sessionContext.user.gender == null}"
+                                        style="border-radius: 50%;"
+                                        width="40px" height="40px"/>
+                        <div class="layout-profile-userinfo">
+                            <span class="layout-profile-name">#{sessionContext.user.firstName} #{sessionContext.user.lastName}</span>
+                            <span class="layout-profile-role"><h:outputText value="#{i18n.doctor}" rendered="#{sessionContext.user.accountType == 'Doctor'}"/></span>
+                            <span class="layout-profile-role"><h:outputText value="#{i18n.patient}" rendered="#{sessionContext.user.accountType == 'Patient'}"/></span>
+                        </div>
+                    </a>
+
+                    <ul class="profile-menu">
+                        <h:form>
+                            <li>
+                                <h:commandLink id="profile" immediate="true" action="profile">
+                                    <i class="fa fa-fw fa-user"></i>
+                                    <span>Profile</span>
+                                </h:commandLink>
+                            </li>
+                            <li>
+                                <h:commandLink id="changePassword" immediate="true" action="changePassword">
+                                    <i class="fa fa-fw fa-cog"></i>
+                                    <span>Change Password</span>
+                                </h:commandLink>
+                            </li>
+                            <li>
+                                <h:commandLink id="logout" action="#{logoutBean.doLogout}">
+                                    <i class="fa fa-sign-out"></i>
+                                    <span>Sign Out</span>
+                                </h:commandLink>
+                            </li>
+                        </h:form>
+                    </ul>
+                </li>
+                <li class="right-sidebar-item">
+                    <a tabindex="0">
+                        <i class="pi pi-align-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</ui:composition>

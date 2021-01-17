@@ -136,6 +136,23 @@ services:
       - /opt/producer/logs/:/opt/producer/logs
     networks:
       - mnet
+      
+      
+  chat:    
+   image: chat 
+   build: ./chat                
+   container_name: chat
+   links:
+      - gateway
+   environment:
+    - JVM_OPTS=-Xmx4g -Xms1g -XX:MaxPermSize=2g
+    - CATALINA_OPTS=-Xmx4g -Xms1g -XX:MaxPermSize=2g
+   volumes:
+    - ../data/micro/realtime/logs/:/opt/realtime/logs
+   ports:
+    - '9000:9000'
+   networks:
+    - mnet 
      
 networks:
   mnet:

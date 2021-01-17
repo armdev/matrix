@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <a tabindex="0" id="layout-config-button" class="layout-config-button">
+        <i class="pi pi-cog"></i>
+    </a>
+
+    <div class="layout-config">
+        <h5>Menu Type</h5>
+        <h:form id="config-form" enctype="multipart/form-data">
+            <p:selectOneRadio value="#{guestPreferences.layout}" layout="pageDirection">
+                <f:selectItem itemLabel="Static" itemValue="static" />
+                <f:selectItem itemLabel="Overlay" itemValue="overlay" />
+                <f:selectItem itemLabel="Slim" itemValue="slim" />
+                <p:ajax listener="#{guestPreferences.onLayoutChange}" update="menu-themes-panel" />
+            </p:selectOneRadio>
+ 
+            <hr />
+
+            <h5>Color Scheme</h5>
+            <p:selectOneRadio value="#{guestPreferences.scheme}" layout="pageDirection">
+                <f:selectItem itemLabel="Light" itemValue="light" />
+                <f:selectItem itemLabel="Dim" itemValue="dim" />
+                <f:selectItem itemLabel="Dark" itemValue="dark" />
+                <p:ajax onstart="PrimeFaces.DiamondConfigurator.beforeResourceChange()" listener="#{guestPreferences.onSchemeChange}" update="menu-themes-panel" />
+            </p:selectOneRadio>
+
+            <hr />
+
+            <h5>Input Style</h5>
+            <p:selectOneRadio value="#{guestPreferences.inputStyle}" layout="pageDirection" onchange="PrimeFaces.DiamondConfigurator.updateInputStyle(event.target.value)">
+                <f:selectItem itemLabel="Outlined" itemValue="outlined" />
+                <f:selectItem itemLabel="Filled" itemValue="filled" />
+                <p:ajax />
+            </p:selectOneRadio>
+
+            <hr />
+
+            <h5>Menu Themes</h5>
+            <p:outputPanel id="menu-themes-panel">
+                <p:outputPanel class="layout-themes" rendered="#{guestPreferences.scheme == 'light'}">
+                    <ui:repeat value="#{guestPreferences.menuThemes}" var="menuTheme">
+                        <div>
+                            <p:commandLink actionListener="#{guestPreferences.changeMenuTheme(menuTheme)}" 
+                                    style="background-color: #{menuTheme.color}" title="#{menuTheme.name}" process="@this"
+                                    onstart="PrimeFaces.DiamondConfigurator.beforeResourceChange()"
+                                    oncomplete="PrimeFaces.DiamondConfigurator.changeMenuTheme('#{menuTheme.name}', '#{menuTheme.logoColor}', '#{menuTheme.componentTheme}')">
+                            </p:commandLink>
+                        </div>
+                    </ui:repeat>
+                </p:outputPanel>
+                <p:outputPanel rendered="#{guestPreferences.scheme != 'light'}">
+                    <p>Menu themes are only available in light mode by design as large surfaces can emit too much brightness in dark mode.</p></p:outputPanel>
+            </p:outputPanel>
+
+            <hr />
+
+            <h5>Component Themes</h5>
+            <div class="layout-themes">
+                <ui:repeat value="#{guestPreferences.componentThemes}" var="componentTheme">
+                    <div>
+                        <p:commandLink actionListener="#{guestPreferences.setComponentTheme(componentTheme.name)}" 
+                                style="background-color: #{componentTheme.color}" title="#{componentTheme.name}" process="@this"
+                                onstart="PrimeFaces.DiamondConfigurator.beforeResourceChange()"
+                                oncomplete="PrimeFaces.DiamondConfigurator.changeComponentTheme('#{componentTheme.name}')">
+                        </p:commandLink>
+                    </div>
+                </ui:repeat>
+            </div>
+        </h:form>
+    </div>
+</ui:composition>

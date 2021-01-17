@@ -1,0 +1,11 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+    <div class="layout-footer">
+        <div class="footer-logo-container">
+            <p:graphicImage id="footer-logo" name="images/#{guestPreferences.scheme eq 'light' ? 'logo-dark.svg' : 'logo-white.svg'}" library="diamond-layout" />
+            <span class="app-name">HiCare</span>
+        </div>
+        <h:outputText styleClass="copyright" value="&#169; HiCare - 2021" />
+    </div>
+</ui:composition>

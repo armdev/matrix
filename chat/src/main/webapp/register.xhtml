@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <link rel="shortcut icon" href="#{request.contextPath}/resources/diamond-layout/images/favicon.ico" type="image/x-icon"></link>
+            <link rel="icon" href="#{request.contextPath}/resources/diamond-layout/images/favicon.ico" type="image/x-icon"></link>
+        </f:facet>
+        <title>Chat Sign Up</title>
+    </h:head>
+
+    <h:body styleClass="login-body #{guestPreferences.inputStyleClass}">
+        <h:form id="registerForm" rendered="#{sessionContext.user.id == null}">
+            <p:growl/>
+            <div class="login-wrapper">
+                <div class="login-panel">
+                    <p:graphicImage name="images/#{guestPreferences.scheme eq 'light' ? 'logo-dark.svg' : 'logo-white.svg'}" styleClass="logo" library="diamond-layout" />
+
+                    <div class="login-form">
+                        <h2>Create Your Free Account</h2>
+                        <p>Already have an account? <a href="login.jsf">Login</a></p>
+                        <p:inputText style="margin-top:1%;" value="#{registerBean.register.firstName}" id="firstname" placeholder="#{i18n.firstname}" 
+                                     required="true" requiredMessage="#{i18n.mandatory}">                         
+                            <f:validateLength maximum="50"/>                            
+                        </p:inputText>   
+                        <p:inputText style="margin-top:1%;" value="#{registerBean.register.lastName}" id="lastname" placeholder="#{i18n.lastname}" required="true" requiredMessage="#{i18n.mandatory}">                         
+                            <f:validateLength maximum="50"/>                            
+                        </p:inputText>     
+                        <p:inputText style="margin-top:1%;" value="#{registerBean.register.phone}" id="phone" placeholder="#{i18n.phone}" required="true" 
+                                     requiredMessage="#{i18n.mandatory}">                         
+                            <f:validateLength maximum="50"/>                            
+                        </p:inputText> 
+                        <p:inputText style="margin-top:1%;" value="#{registerBean.register.email}" id="email" placeholder="#{i18n.email}" required="true" 
+                                     requiredMessage="#{i18n.mandatory}">                         
+                            <f:validateLength maximum="50"/>                            
+                        </p:inputText>   
+                        <p:password style="margin-top:1%;" value="#{registerBean.register.password}" id="password"  placeholder="#{i18n.password}" required="true" 
+                                    requiredMessage="#{i18n.mandatory}" >                            
+                            <f:validateLength minimum="6" maximum="20"/>    
+                        </p:password>
+                        <p:password style="margin-top:1%;" id="confirmPassword"  requiredMessage="#{i18n.mandatory}" required="true"  placeholder="#{i18n.confirm}" redisplay="true">                                                   
+                            <f:validateLength minimum="6" maximum="20"/>                            
+                        </p:password>
+                        <p:commandButton  ajax="false" action="#{registerBean.registerAccount()}" update="registerForm" value="#{i18n.signup}"  />
+                    </div>
+
+                    <p>A problem? <a href="#">Click here</a> and let us help you.</p>
+                </div>
+                <div class="login-image">
+                    <div class="login-image-content">
+                        <h1>Open New Account</h1>
+                        <h1>In Chat</h1>
+
+                        
+                    </div>
+                    <div class="image-footer">
+                        <p>Quickly enter to chat platform</p>
+                        <div class="icons">
+                            <i class="pi pi-github"></i>
+                            <i class="pi pi-twitter"></i>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </h:form>
+        <h:outputStylesheet id="layout-scheme" name="css/layout-#{guestPreferences.scheme}.css" library="diamond-layout" />
+        <h:outputStylesheet name="css/primeicons.css" library="diamond-layout" />
+    </h:body>
+
+</html>

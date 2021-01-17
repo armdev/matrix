@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <link rel="shortcut icon" href="#{request.contextPath}/resources/diamond-layout/images/favicon.ico" type="image/x-icon"></link>
+            <link rel="icon" href="#{request.contextPath}/resources/diamond-layout/images/favicon.ico" type="image/x-icon"></link>
+        </f:facet>
+        <title>Chat Sign In</title>
+    </h:head>
+
+    <h:body styleClass="login-body #{guestPreferences.inputStyleClass}">
+        <h:form id="loginForm" prependId="false" rendered="#{sessionContext.user.id == null}">
+            <p:growl/>
+            <div class="login-wrapper">
+                <div class="login-panel">
+                    <p:graphicImage name="images/#{guestPreferences.scheme eq 'light' ? 'logo-dark.svg' : 'logo-white.svg'}" styleClass="logo" library="diamond-layout" />
+
+                    <div class="login-form">
+                        <h2>Sign in to Chat</h2>
+                        <p>Do not have an account? <a href="register.jsf">Sign Up</a></p>
+
+                        <p:inputText value="#{loginBean.loginModel.email}" id="email"  
+                                     placeholder="#{i18n.email}"  required="true" requiredMessage="#{i18n.mandatory}">
+
+                            <f:validateLength maximum="50"/>                            
+                        </p:inputText> 
+
+
+                        <p:password value="#{loginBean.loginModel.password}" id="passwd"  placeholder="#{i18n.password}" required="true" requiredMessage="#{i18n.mandatory}" >
+                            <f:validateRequired/>
+                            <f:validateLength maximum="50"/> 
+                        </p:password>
+                        <p:commandButton  ajax="true" action="#{loginBean.loginUser()}"  icon="fa fa-sign-in" update="loginForm" value="#{i18n.login}"  />
+                    </div>
+
+                    <p>A problem? <a href="#">Click here</a> and let us help you.</p>
+                </div>
+                <div class="login-image">
+                    <div class="login-image-content">
+                        <h1>Access to your</h1>
+                        <h1>HiCare</h1>
+                        <h1>Account</h1>
+                        <h3>Patient-Centric Platform
+                            <br/> The right care is provided at the right time and the right place.
+                            <br/> </h3>
+                    </div>
+                    <div class="image-footer">
+                        <p>Advanced and Flexible care planning for patients.</p>
+                        <div class="icons">
+                            <i class="pi pi-github"></i>
+                            <i class="pi pi-twitter"></i>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </h:form>
+
+        <h:outputStylesheet id="layout-scheme" name="css/layout-#{guestPreferences.scheme}.css" library="diamond-layout" />
+        <h:outputStylesheet name="css/primeicons.css" library="diamond-layout" />
+    </h:body>
+
+</html>

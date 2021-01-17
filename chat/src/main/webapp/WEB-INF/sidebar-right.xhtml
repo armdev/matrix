@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:d="http://primefaces.org/diamond">
+
+    <div class="layout-sidebar-right">
+        <h5>Activity</h5>
+        <h:form enctype="multipart/form-data">
+            <div class="widget-timeline">
+                <div class="timeline-event">
+                    <span class="timeline-event-icon" style="background-color:#64B5F6">
+                        <i class="pi pi-dollar"></i>
+                    </span>
+                    <div class="timeline-event-title">New Sale</div>
+                    <div class="timeline-event-detail">Richard Jones has purchased a blue t-shirt for <strong>$79</strong>.</div>
+                </div>
+                <div class="timeline-event">
+                    <span class="timeline-event-icon" style="background-color:#7986CB">
+                        <i class="timeline-icon pi pi-download"></i>
+                    </span>
+                    <div class="timeline-event-title">Withdrawal Initiated</div>
+                    <div class="timeline-event-detail">Your request for withdrawal of <strong>$2500</strong> has been initiated.</div>
+                </div>
+                <div class="timeline-event">
+                    <span class="timeline-event-icon" style="background-color:#4DB6AC">
+                        <i class="timeline-icon pi pi-question"></i>
+                    </span>
+                    <div class="timeline-event-title">Question Received</div>
+                    <div class="timeline-event-detail">Jane Davis has posted a <strong>new question</strong> about your product.</div>
+                </div>
+                <div class="timeline-event">
+                    <span class="timeline-event-icon" style="background-color:#4DD0E1">
+                        <i class="timeline-icon pi pi-comment"></i>
+                    </span>
+                    <div class="timeline-event-title">Comment Received</div>
+                    <div class="timeline-event-detail">Claire Smith has upvoted your store along with a <strong>comment</strong>.</div>
+                </div>
+            </div>
+
+            <hr />
+
+            <h5>Quick Withdraw</h5>
+            <div class="withdraw ui-fluid">
+                <div>
+                    <p:inputText placeholder="Amount" />
+                </div>
+                <div>
+                    <p:selectOneMenu appendTo="@this">
+                        <f:selectItem itemLabel="*****24" itemValue="*****24" /> 
+                        <f:selectItem itemLabel="*****75" itemValue="*****75" /> 
+                    </p:selectOneMenu>
+                </div>
+                <div>
+                    <p:commandButton type="button" value="Confirm" icon="fa fa-check"/>
+                </div>
+            </div>
+
+            <hr />
+
+            <h5>Shipment Tracking</h5>
+            <p>Track your ongoing shipments to customers.</p>
+            <p:graphicImage styleClass="logo-image" name="images/sidebar-right/staticmap.png" library="demo" style="width:100%"/>
+        </h:form>
+    </div>
+</ui:composition>

@@ -1,0 +1,37 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
+/target
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+nb-configuration.xml
+nbactions.xml
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+
+# themes
+/src/main/webapp/resources/demo/css/demo.css
+/src/main/webapp/resources/demo/css/demo-*.css
+/src/main/webapp/resources/diamond-layout/css/layout-*.css
+/src/main/webapp/resources/diamond-layout/css/landing.css
+/src/main/webapp/resources/primefaces-diamond-*/*.css
+/src/main/webapp/resources/sass/theme/designer
+
+# System Files
+.DS_Store
+Thumbs.db

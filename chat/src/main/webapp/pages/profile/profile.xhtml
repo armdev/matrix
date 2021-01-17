@@ -1,0 +1,158 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Profile</ui:define>
+
+    <ui:param name="viewname" value="Profile" />
+
+
+    <ui:define name="content">
+        <p:growl/>
+
+        <h:form id="updateprofile" enctype="multipart/form-data" prependId="false" >
+            <div class="p-grid">
+                <div class="p-col-12 p-md-6">
+                    <div class="card ui-fluid">
+
+
+                        <div class="p-col-12">
+                            <div class="card card-w-title">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-6">
+                                        <h1>#{i18n.profileupdate}</h1>                              
+                                        <p:growl id="messages" showDetail="true" life="2000" />
+                                    </div>
+                                    <div class="p-col-12 p-md-6">
+
+                                    </div>
+
+
+                                    <div class="p-col-12 p-md-6">
+                                        <p:outputLabel  for="firstname" value="First name" style="font-weight: bold;"/>
+                                        <p:inputText id="firstname" placeholder="First name" title="#{i18n.firstname}" required="true" requiredMessage="#{i18n.mandatory}"
+                                                     value="#{profileBean.userModel.firstName}">                                       
+                                            <f:validateRequired/>
+                                            <f:validateLength maximum="100"/>                            
+                                        </p:inputText> 
+                                    </div>
+
+                                    <div class="p-col-12 p-md-6">
+                                        <p:outputLabel  for="lastname" value="Last name" style="font-weight: bold;"/>
+                                        <p:inputText id="lastname" placeholder="Last name" title="#{i18n.lastname}" required="true" requiredMessage="#{i18n.mandatory}"
+                                                     value="#{profileBean.userModel.lastName}">                                       
+                                            <f:validateRequired/>
+                                            <f:validateLength maximum="100"/>                            
+                                        </p:inputText> 
+                                    </div>
+
+                                    <div class="p-col-12 p-md-6">
+                                        <p:outputLabel   for="mail" value="E-mail" style="font-weight: bold;"/>
+                                        <p:inputText placeholder="#{i18n.email}" id="mail" title="#{i18n.email}" required="true" requiredMessage="#{i18n.mandatory}" readonly="false"
+                                                     value="#{profileBean.userModel.email}">                                       
+                                            <f:validateRequired/>
+                                            <f:validateLength maximum="100"/>                            
+                                        </p:inputText>
+                                    </div>
+
+                                    <div class="p-col-12 p-md-6">
+                                        <p:outputLabel  for="gender" value="Gender" style="font-weight: bold;"/>
+                                        <p:selectOneMenu id="gender" value="#{profileBean.userModel.gender}" required="true" requiredMessage="#{i18n.mandatory}" caseSensitive="true" >                           
+                                            <f:selectItems value="#{profileBean.genderList}" var="list" itemLabel="#{list.key}"  itemValue="#{list.value}"/>
+                                        </p:selectOneMenu>
+
+                                    </div>
+
+
+                                    <div class="p-col-12 p-md-6">
+                                        <p:outputLabel   for="mobileno" value="Mobile number" style="font-weight: bold;"/>
+                                        <p:inputText id="mobileno" placeholder="Mobile number" requiredMessage="#{i18n.mandatory}" required="true"
+                                                     value="#{profileBean.userModel.phone}">  
+                                        </p:inputText>  
+                                    </div>
+                                    <div class="p-col-12 p-md-6">
+                                        <p:outputLabel  for="birthyear" value="Birth year" style="font-weight: bold;"/>
+                                        <p:inputText id="birthyear" placeholder="#{i18n.birthYear}" title="#{i18n.birthYear}" required="true" requiredMessage="#{i18n.mandatory}"
+                                                     value="#{profileBean.userModel.birthYear}">                                       
+                                            <f:validateRequired/>
+                                            <f:validateLength maximum="4"/>                            
+                                        </p:inputText> 
+                                    </div>
+
+                                    <div class="p-col-12 p-md-6">
+
+                                    </div>
+
+                                    <div class="p-col-12 p-md-6">
+                                        <p:commandButton type="submit" ajax="false" icon="fa fa-save" value="#{i18n.save}" action="#{profileBean.updateProfile()}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="p-col-12 p-lg-4">
+
+                    <div class="p-grid">
+
+                        <div class="p-col-12">
+                            <div class="card card-w-title">
+                                <div class="p-grid" style="margin-left:10%;">
+                                    <div class="p-col-12 p-md-12">
+
+                                    </div>
+
+                                    <div class="p-col-12 p-md-12">
+                                        <p:graphicImage url="/PreviewImage?fileId=#{sessionContext.userAvatarId}"
+                                                        rendered="#{sessionContext.userAvatarId != null}"
+                                                        width="120px" height="120px"/>
+
+                                    </div>
+
+                                    <div class="p-col-12 p-md-12">
+
+                                        <p:graphicImage value="/resources/female.jpeg"
+                                                        rendered="#{sessionContext.userAvatarId == null and sessionContext.user.gender == 'Female'}"
+                                                        width="120px" height="120px"/>
+
+                                    </div>
+
+                                    <div class="p-col-12 p-md-12"> 
+                                        <p:graphicImage value="/resources/male.jpeg"
+                                                        rendered="#{sessionContext.userAvatarId == null and sessionContext.user.gender == 'Male'}"
+                                                        width="120px" height="120px"/>
+                                    </div>
+                                    <div class="p-col-12 p-md-12"></div>
+                                    <div class="p-col-12 p-md-12"></div>
+
+                                    <div class="p-col-12 p-md-12"> 
+                                        <h:inputFile   value="#{fileUploadBean.uploadedFile}"/>  
+                                    </div>
+
+                                    <div class="p-col-12 p-md-6">
+                                        <p:commandButton type="submit"  ajax="false" value="#{i18n.upload}" action="#{fileUploadBean.doAction()}"  />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+        </h:form>
+
+
+    </ui:define>
+</ui:composition>

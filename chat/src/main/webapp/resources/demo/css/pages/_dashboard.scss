@@ -1,0 +1,50 @@
+.layout-dashboard {
+    .order-tabs {
+        margin-bottom: 1rem;
+
+        .order-tab {
+            padding: 1rem 2rem 2rem 1rem;
+            position: relative;
+            transition: box-shadow .2s;
+            
+            &:hover {
+                box-shadow: 0 .125rem .25rem rgba(0,0,0,.15);
+                cursor: pointer;
+            }
+
+            i {
+                font-size: 1rem;
+                vertical-align: middle;
+            }
+
+            .order-label {
+                margin-left: .25rem;
+                vertical-align: middle;
+            }
+
+            .stat-detail-icon {
+                position: absolute;
+                right: 1rem;
+                top: 2.25rem;
+                height: 1rem;
+                width: 1rem;
+            } 
+
+            img {
+                position: absolute;
+                bottom: 0;
+                left: 5%;
+                width: 90%;
+            }         
+        }
+    }
+
+    .overview-chart {
+        overflow: auto;
+    }  
+
+    .dashbard-demo-dropdown {
+        width: 8rem;
+        margin-left: auto;
+    }
+}
