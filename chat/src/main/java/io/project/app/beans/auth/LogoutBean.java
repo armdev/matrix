@@ -2,7 +2,6 @@ package io.project.app.beans.auth;
 
 import io.project.app.beans.handlers.JSFContextHandler;
 
-import io.project.app.security.SessionContext;
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
@@ -24,9 +23,6 @@ public class LogoutBean implements Serializable {
     @Inject
     private JSFContextHandler jSFContextHandler;
 
-
-    @Inject
-    private SessionContext sessionContext;
 
     public LogoutBean() {
 
@@ -58,10 +54,4 @@ public class LogoutBean implements Serializable {
         return "logout";
     }
 
-    public void cleanOrg() {
-
-        LOGGER.info("Remove session org ");
-        jSFContextHandler.getExternalContext().getSessionMap().remove("hicOrganizationBean");
-
-    }
 }
