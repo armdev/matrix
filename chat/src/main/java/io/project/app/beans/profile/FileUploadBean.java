@@ -94,7 +94,7 @@ public class FileUploadBean implements Serializable {
 
             if (saveFile != null) {
                 sessionContext.setAvatarId(saveFile);
-                //sessionContext.getUser().setAvatarId(saveFile);
+                sessionContext.getUser().setAvatarId(saveFile);
                 profileUpdateClient.updateAccountProfile(sessionContext.getUser());
             }
 

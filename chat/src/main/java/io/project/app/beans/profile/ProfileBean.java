@@ -28,6 +28,7 @@ public class ProfileBean implements Serializable {
     @Inject
     private SessionContext sessionContext;
 
+    @Inject
     private AccountValidationClient accountValidationClient;
 
     private Account userModel = null;
