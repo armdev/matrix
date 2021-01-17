@@ -75,27 +75,26 @@
                 <li class="profile-item">
 
                     <a href="#">                        
-                        <p:graphicImage url="/PreviewImage?fileId=#{sessionContext.userAvatarId}"
-                                        rendered="#{sessionContext.userAvatarId != null}" style="border-radius: 50%;"
+                        <p:graphicImage url="/PreviewImage?fileId=#{sessionContext.avatarId}"
+                                        rendered="#{sessionContext.avatarId != null}" style="border-radius: 50%;"
                                         width="40px" height="40px"/>
 
                         <p:graphicImage value="/resources/female.jpeg"
-                                        rendered="#{sessionContext.userAvatarId == null and sessionContext.user.gender == 'Female'}"
+                                        rendered="#{sessionContext.avatarId == null and sessionContext.user.gender == 'Female'}"
                                         style="border-radius: 50%;"
                                         width="40px" height="40px"/>
                         <p:graphicImage value="/resources/male.jpeg"
-                                        rendered="#{sessionContext.userAvatarId == null and sessionContext.user.gender == 'Male'}"
+                                        rendered="#{sessionContext.avatarId == null and sessionContext.user.gender == 'Male'}"
                                         style="border-radius: 50%;"
                                         width="40px" height="40px"/>
 
                         <p:graphicImage value="/resources/male.jpeg"
-                                        rendered="#{sessionContext.userAvatarId == null and sessionContext.user.gender == null}"
+                                        rendered="#{sessionContext.avatarId == null and sessionContext.user.gender == null}"
                                         style="border-radius: 50%;"
                                         width="40px" height="40px"/>
                         <div class="layout-profile-userinfo">
-                            <span class="layout-profile-name">#{sessionContext.user.firstName} #{sessionContext.user.lastName}</span>
-                            <span class="layout-profile-role"><h:outputText value="#{i18n.doctor}" rendered="#{sessionContext.user.accountType == 'Doctor'}"/></span>
-                            <span class="layout-profile-role"><h:outputText value="#{i18n.patient}" rendered="#{sessionContext.user.accountType == 'Patient'}"/></span>
+                            <span class="layout-profile-name">#{sessionContext.user.name}</span>
+                      
                         </div>
                     </a>
 

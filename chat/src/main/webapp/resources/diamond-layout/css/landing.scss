@@ -82,7 +82,7 @@ html {
     }
 /* armen */
     .landing-header {
-        background-image: url(/frontend/javax.faces.resource/images/pages/landing/bg-header.svg.jsf?ln=diamond-layout);
+        background-image: url(/chat/javax.faces.resource/images/pages/landing/bg-header.svg.jsf?ln=diamond-layout);
         min-height: 520px;
         background-size: cover;
         background-position: 0% bottom;
@@ -400,10 +400,10 @@ html {
             }
         }
     }
-
+ /* armen */
     .landing-contact {
         padding: 80px 8% 24px;
-        background-image: url(/frontend/javax.faces.resource/images/pages/landing/bg-contact.svg.xhtml?ln=diamond-layout);
+        background-image: url(/chat/javax.faces.resource/images/pages/landing/bg-contact.svg.xhtml?ln=diamond-layout);
         min-height: 520px;
         background-size: cover;
         background-position: 0 top;

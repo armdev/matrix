@@ -37,8 +37,6 @@ public class LoginBean implements Serializable {
     @Inject
     private SessionContext sessionContext;
 
-  
-
     private LoginRequest loginModel = new LoginRequest();
 
     public LoginBean() {
@@ -64,15 +62,13 @@ public class LoginBean implements Serializable {
 
         if (loginResponse.getAccount().getId() != null) {
             sessionContext.setUser(loginResponse.getAccount());
-          
+            sessionContext.setAvatarId(loginResponse.getAccount().getAvatarId());
             LOGGER.info("User logged in successfully");
+
+            sessionContext.setSessionToken(sessionContext.getSessionToken());
             LOGGER.info("this is Session Token " + sessionContext.getSessionToken());
-
-        
-
             return "profile";
         }
-
 
         FacesMessage msg = new FacesMessage(jSFContextHandler.getMessageResourceBundle().getString("nouser"), jSFContextHandler.getMessageResourceBundle().getString("nouser"));
         FacesContext.getCurrentInstance().addMessage(null, msg);

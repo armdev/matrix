@@ -37,6 +37,8 @@ public class Account implements Serializable {
 
     private String password;
 
+    private String avatarId;
+
     @LastModifiedDate
     @JsonIgnore
     private Instant lastModifiedDate = Instant.now();

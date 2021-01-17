@@ -4,7 +4,7 @@
     <div class="layout-sidebar">
         <h:link class="logo" outcome="/index">
             <p:graphicImage id="app-logo" styleClass="logo-image" name="images/#{guestPreferences.logoColor eq 'white' ? 'logo-white.svg' : 'logo-dark.svg'}" library="diamond-layout" />
-            <span class="app-name">HiCare</span>
+            <span class="app-name">Chat</span>
         </h:link>
 
         <div class="layout-menu-container">
@@ -12,7 +12,7 @@
                 <d:menu widgetVar="diamondMenuWidget">
                   
                     <p:submenu id="om_components" label="Chat Dashboard" icon="pi pi-star">
-                        <p:menuitem id="om_formlayout" value="Chat" icon="pi pi-id-card" outcome="/chat/chat" />
+                        <p:menuitem id="om_formlayout" value="Chat" icon="pi pi-id-card" outcome="/pages/chat/chat" />
 
                     </p:submenu>
                     <p:separator />
