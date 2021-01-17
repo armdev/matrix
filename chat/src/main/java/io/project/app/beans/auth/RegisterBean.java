@@ -53,7 +53,7 @@ public class RegisterBean implements Serializable {
 
     public String registerAccount() {
         LOGGER.info("Register new user");
-        Account returnedResponse = accountValidationClient.getAccountByEmail(register.getEmail());
+        Account returnedResponse = accountValidationClient.getAccountByEmail(register.getEmail()).getAccount();
         if (returnedResponse.getId() != null) {
             LOGGER.info("User tried to register with busy email ");
             FacesMessage msg = new FacesMessage(jSFContextHandler.getMessageResourceBundle().getString("emailbusy"), jSFContextHandler.getMessageResourceBundle().getString("emailbusy"));
@@ -108,6 +108,14 @@ public class RegisterBean implements Serializable {
             }
         }
 
+    }
+
+    public RegisterRequest getRegister() {
+        return register;
+    }
+
+    public void setRegister(RegisterRequest register) {
+        this.register = register;
     }
 
     public void publishMessage() {

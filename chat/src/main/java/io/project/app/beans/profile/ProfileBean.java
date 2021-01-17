@@ -1,7 +1,7 @@
 package io.project.app.beans.profile;
 
-
 import io.project.app.domain.Account;
+import io.project.app.http.clients.account.AccountValidationClient;
 import io.project.app.security.SessionContext;
 
 import io.project.app.http.clients.account.ProfileUpdateClient;
@@ -28,6 +28,8 @@ public class ProfileBean implements Serializable {
     @Inject
     private SessionContext sessionContext;
 
+    private AccountValidationClient accountValidationClient;
+
     private Account userModel = null;
 
     private String userPassword;
@@ -40,7 +42,7 @@ public class ProfileBean implements Serializable {
         LOGGER.info("profile bean init");
         if (sessionContext.getUser().getId() != null) {
             LOGGER.info("Loading current logged user profile");
-            userModel = profileUpdateClient.getAccountById(sessionContext.getUser().getId());
+            userModel = accountValidationClient.getAccountById(sessionContext.getUser().getId()).getAccount();
         }
     }
 
@@ -77,8 +79,6 @@ public class ProfileBean implements Serializable {
 
         return null;
     }
-
-  
 
     public String getUserPassword() {
         return userPassword;

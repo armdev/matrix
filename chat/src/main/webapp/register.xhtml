@@ -27,17 +27,11 @@
                     <div class="login-form">
                         <h2>Create Your Free Account</h2>
                         <p>Already have an account? <a href="login.jsf">Login</a></p>
-                        <p:inputText style="margin-top:1%;" value="#{registerBean.register.firstName}" id="firstname" placeholder="#{i18n.firstname}" 
+                        <p:inputText style="margin-top:1%;" value="#{registerBean.register.name}" id="firstname" placeholder="#{i18n.firstname}" 
                                      required="true" requiredMessage="#{i18n.mandatory}">                         
                             <f:validateLength maximum="50"/>                            
                         </p:inputText>   
-                        <p:inputText style="margin-top:1%;" value="#{registerBean.register.lastName}" id="lastname" placeholder="#{i18n.lastname}" required="true" requiredMessage="#{i18n.mandatory}">                         
-                            <f:validateLength maximum="50"/>                            
-                        </p:inputText>     
-                        <p:inputText style="margin-top:1%;" value="#{registerBean.register.phone}" id="phone" placeholder="#{i18n.phone}" required="true" 
-                                     requiredMessage="#{i18n.mandatory}">                         
-                            <f:validateLength maximum="50"/>                            
-                        </p:inputText> 
+                        
                         <p:inputText style="margin-top:1%;" value="#{registerBean.register.email}" id="email" placeholder="#{i18n.email}" required="true" 
                                      requiredMessage="#{i18n.mandatory}">                         
                             <f:validateLength maximum="50"/>                            

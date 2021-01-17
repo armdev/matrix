@@ -14,7 +14,6 @@ import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -125,28 +124,6 @@ public class ProfileUpdateClient implements Serializable {
         return returnedModel;
     }
 
-    public Account getAccountById(String id) {
-        LOGGER.info("Find user by id " + id);
-        Account returnedModel = new Account();
-        long startTime = System.currentTimeMillis();
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpGet request = new HttpGet(service_path + "/account/one?id=" + id);
-            request.addHeader("charset", "UTF-8");
-            request.addHeader("content-type", FrontendConstants.CONTENT_TYPE_JSON);
-            request.addHeader("Authorization", sessionContext.getSessionToken());
-            try (CloseableHttpResponse httpResponse = httpClient.execute(request)) {
-                if (httpResponse.getStatusLine().getStatusCode() == 200) {
-                    
-                    returnedModel = FrontendGsonConverter.fromJson(EntityUtils.toString(httpResponse.getEntity()), Account.class);
-
-                }
-            }
-            long elapsedTime = System.currentTimeMillis() - startTime;
-            LOGGER.info("Find user by id request/response time in milliseconds: " + elapsedTime);
-        } catch (IOException e) {
-            LOGGER.error("Exception caught.", e);
-        }
-        return returnedModel;
-    }
+  
 
 }

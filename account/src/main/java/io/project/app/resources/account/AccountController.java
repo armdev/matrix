@@ -65,5 +65,7 @@ public class AccountController {
 
         return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(("Could not register user"));
     }
+    
+ 
 
 }
