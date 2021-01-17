@@ -17,6 +17,7 @@ import javax.inject.Named;
 import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -53,7 +54,7 @@ public class AccountLoginClient implements Serializable {
 
         ApiAccountResponse returnedModel = new ApiAccountResponse();
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpPost request = new HttpPost(service_path + "/login");
+            HttpPut request = new HttpPut(service_path + "/login");
             String toJson = FrontendGsonConverter.toJson(model);
             StringEntity params = new StringEntity(toJson, "UTF-8");
             request.addHeader("content-type", "application/json");

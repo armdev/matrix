@@ -46,11 +46,11 @@ public class AvatarUploadClient implements Serializable {
     @PostConstruct
     public void init() {
         LOGGER.debug("AvatarUploadClient called");
-        service_path = applicationContextHandler.getAccountServicePath() + "api/v2/documents";
+        service_path = applicationContextHandler.getAccountServicePath() + "api/v2/photos";
     }
 
     //search with file id, not user id!
-    public FileRequest findUserAvatar(String id) {
+    public FileRequest findUserAvatarById(String id) {
         FileRequest fileDTO = new FileRequest();
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             LOGGER.info("FindUserAvatar file started ");
@@ -77,11 +77,11 @@ public class AvatarUploadClient implements Serializable {
         return fileDTO;
     }
 
-    public FileRequest getFileById(String id) {
+    public FileRequest getFileByUserId(String userId) {
         FileRequest fileDTO = new FileRequest();
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             LOGGER.info("getFileById file started ");
-            HttpGet request = new HttpGet(service_path + "?id=" + id);
+            HttpGet request = new HttpGet(service_path + "/account/avatar/user/id?userId=" + userId);
 
             request.addHeader("content-type", FrontendConstants.CONTENT_TYPE_JSON);
             request.addHeader("charset", "UTF-8");
@@ -102,11 +102,12 @@ public class AvatarUploadClient implements Serializable {
         return fileDTO;
     }
 
+    @Deprecated
     public FileRequest deleteFile(String id) {
         FileRequest fileDTO = new FileRequest();
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             LOGGER.info("Upload file started ");
-            HttpDelete request = new HttpDelete(service_path + "?id=" + id);
+            HttpDelete request = new HttpDelete(service_path + "/delete?id=" + id);
 
             request.addHeader("content-type", FrontendConstants.CONTENT_TYPE_JSON);
             request.addHeader("charset", "UTF-8");
@@ -131,7 +132,7 @@ public class AvatarUploadClient implements Serializable {
         String fileId = null;
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             LOGGER.info("Upload file started ");
-            HttpPut request = new HttpPut(service_path);
+            HttpPut request = new HttpPut(service_path+"/insert");
 
             String toJson = GsonConverter.toJson(fileDTO);
             StringEntity params = new StringEntity(toJson, "UTF-8");

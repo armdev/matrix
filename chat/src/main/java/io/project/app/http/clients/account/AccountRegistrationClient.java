@@ -2,11 +2,11 @@ package io.project.app.http.clients.account;
 
 
 import io.project.app.api.requests.RegisterRequest;
+import io.project.app.api.responses.ApiAccountResponse;
 import io.project.app.util.FrontendConstants;
 
 
 import io.project.app.beans.handlers.ApplicationContextHandler;
-import io.project.app.domain.Account;
 import io.project.app.util.FrontendGsonConverter;
 
 import java.io.IOException;
@@ -48,10 +48,10 @@ public class AccountRegistrationClient implements Serializable {
 
    
     @SuppressWarnings("UnusedAssignment")
-    public Account registerNewAccount(RegisterRequest register) {
-        Account returnedModel = new Account();
+    public ApiAccountResponse registerNewAccount(RegisterRequest register) {
+        ApiAccountResponse returnedModel = new ApiAccountResponse();
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpPut request = new HttpPut(service_path);
+            HttpPut request = new HttpPut(service_path+"/register");
             String jsonInString = FrontendGsonConverter.toJson(register);
             StringEntity params = new StringEntity(jsonInString, "UTF-8");
             request.addHeader("content-type", FrontendConstants.CONTENT_TYPE_JSON);
@@ -63,7 +63,7 @@ public class AccountRegistrationClient implements Serializable {
                 LOGGER.info("Status code " + httpResponse.getStatusLine().getStatusCode());
                 if (httpResponse.getStatusLine().getStatusCode() == 200) {
 
-                    returnedModel = FrontendGsonConverter.fromJson(EntityUtils.toString(httpResponse.getEntity()), Account.class);
+                    returnedModel = FrontendGsonConverter.fromJson(EntityUtils.toString(httpResponse.getEntity()), ApiAccountResponse.class);
                     return returnedModel;
                 }
             }

@@ -55,7 +55,7 @@ public class PreviewImage extends HttpServlet {
             }
         }
         if (fileIdStr != null) {
-            FileRequest file = appManager.getFileById(fileIdStr);
+            FileRequest file = appManager.findUserAvatarById(fileIdStr);
             if (file != null) {
                 byte[] content = Base64.decodeBase64(file.getFileContent());
 

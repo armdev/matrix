@@ -34,7 +34,7 @@ public class RegisterBean implements Serializable {
 
     @Inject
     private AccountValidationClient accountValidationClient;
-    
+
     @Inject
     private JSFContextHandler jSFContextHandler;
 
@@ -61,7 +61,7 @@ public class RegisterBean implements Serializable {
             return null;
         }
 
-        Account registerNewAccount = accountRegistrationClient.registerNewAccount(register);
+        Account registerNewAccount = accountRegistrationClient.registerNewAccount(register).getAccount();
 
         if (registerNewAccount.getId() != null) {
             return "login";
@@ -109,8 +109,6 @@ public class RegisterBean implements Serializable {
         }
 
     }
-
- 
 
     public void publishMessage() {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, jSFContextHandler.getMessageResourceBundle().getString("registersuccess"), jSFContextHandler.getMessageResourceBundle().getString("registersuccess"));

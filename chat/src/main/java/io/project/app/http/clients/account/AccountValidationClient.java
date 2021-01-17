@@ -17,8 +17,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -35,7 +33,7 @@ public class AccountValidationClient implements Serializable {
     @Inject
     private ApplicationContextHandler applicationContextHandler;
 
-    private  String service_path ;
+    private String service_path;
 
     @Inject
     private SessionContext sessionContext;
@@ -47,50 +45,20 @@ public class AccountValidationClient implements Serializable {
     @PostConstruct
     public void init() {
         LOGGER.debug("AccountValidationClient called");
-        
-       service_path= applicationContextHandler.getAccountServicePath() + "api/v2/validations";
-    }
 
-    public Integer findUserByPhone(String phone) {
-
-        Integer statusCode = 0;
-
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-
-            HttpPost request = new HttpPost(service_path);
-            String jsonInString = FrontendGsonConverter.toJson(phone);
-
-            StringEntity params = new StringEntity(jsonInString, "UTF-8");
-            request.addHeader("content-type", FrontendConstants.CONTENT_TYPE_JSON);
-            request.addHeader("charset", "UTF-8");
-            request.setEntity(params);
-            request.addHeader("Authorization", sessionContext.getSessionToken());
-            long startTime = System.currentTimeMillis();
-            try (CloseableHttpResponse httpResponse = httpClient.execute(request)) {
-                LOGGER.info("Status code " + httpResponse.getStatusLine().getStatusCode());
-                statusCode = httpResponse.getStatusLine().getStatusCode();
-                if (httpResponse.getStatusLine().getStatusCode() == 200) {
-                    return httpResponse.getStatusLine().getStatusCode();
-                }
-            }
-            long elapsedTime = System.currentTimeMillis() - startTime;
-            LOGGER.info("request/response time in milliseconds: " + elapsedTime);
-        } catch (IOException e) {
-            LOGGER.error("Exception caught.", e);
-        }
-        return statusCode;
+        service_path = applicationContextHandler.getAccountServicePath() + "api/v2/validations";
     }
 
     public Account getAccountByEmail(String email) {
         LOGGER.info("Find user by email " + email);
         Account model = new Account();
         long startTime = System.currentTimeMillis();
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+        try ( CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(service_path + "/email?email=" + email);
-            request.addHeader("charset", "UTF-8");           
+            request.addHeader("charset", "UTF-8");
             request.addHeader("content-type", FrontendConstants.CONTENT_TYPE_JSON);
             request.addHeader("Authorization", sessionContext.getSessionToken());
-            try (CloseableHttpResponse httpResponse = httpClient.execute(request)) {
+            try ( CloseableHttpResponse httpResponse = httpClient.execute(request)) {
                 LOGGER.info("Status code " + httpResponse.getStatusLine().getStatusCode());
                 if (httpResponse.getStatusLine().getStatusCode() == 200) {
                     Type listType = new TypeToken<Account>() {
@@ -106,5 +74,4 @@ public class AccountValidationClient implements Serializable {
         return model;
     }
 
-  
 }

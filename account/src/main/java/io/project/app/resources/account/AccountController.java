@@ -57,8 +57,10 @@ public class AccountController {
 
         Optional<Account> doRegister = accountService.registerAccount(registerRequest);
         if (doRegister.isPresent()) {
+            ApiAccountResponse apiAccountResponse = new ApiAccountResponse();
+            apiAccountResponse.setAccount(doRegister.get());
             log.info("Register success");
-            return ResponseEntity.status(HttpStatus.OK).body(doRegister.get());
+            return ResponseEntity.status(HttpStatus.OK).body(apiAccountResponse);
         }
 
         return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(("Could not register user"));
