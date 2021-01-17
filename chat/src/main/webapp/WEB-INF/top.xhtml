@@ -79,17 +79,14 @@
                                         rendered="#{sessionContext.avatarId != null}" style="border-radius: 50%;"
                                         width="40px" height="40px"/>
 
-                        <p:graphicImage value="/resources/female.jpeg"
-                                        rendered="#{sessionContext.avatarId == null and sessionContext.user.gender == 'Female'}"
-                                        style="border-radius: 50%;"
-                                        width="40px" height="40px"/>
+
                         <p:graphicImage value="/resources/male.jpeg"
-                                        rendered="#{sessionContext.avatarId == null and sessionContext.user.gender == 'Male'}"
+                                        rendered="#{sessionContext.avatarId == null}"
                                         style="border-radius: 50%;"
                                         width="40px" height="40px"/>
 
                         <p:graphicImage value="/resources/male.jpeg"
-                                        rendered="#{sessionContext.avatarId == null and sessionContext.user.gender == null}"
+                                        rendered="#{sessionContext.avatarId == null}"
                                         style="border-radius: 50%;"
                                         width="40px" height="40px"/>
                         <div class="layout-profile-userinfo">
