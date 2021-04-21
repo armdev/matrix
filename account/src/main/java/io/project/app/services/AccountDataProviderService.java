@@ -7,6 +7,7 @@ package io.project.app.services;
 
 import io.project.app.domain.Account;
 import io.project.app.repositories.AccountRepository;
+import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,12 @@ public class AccountDataProviderService {
 
     public Optional<Account> findById(String id) {
         Optional<Account> existingAccount = accountRepository.findById(id);
+
+        return existingAccount;
+    }
+    
+      public List<Account> getAllUsers() {
+        List<Account> existingAccount = accountRepository.findAll();
 
         return existingAccount;
     }

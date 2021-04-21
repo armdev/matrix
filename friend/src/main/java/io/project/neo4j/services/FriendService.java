@@ -17,6 +17,11 @@ public class FriendService {
     private PersonRepository personRepository;
 
     public Person addAccount(Person person) {
+        Optional<Person> findPerson = this.findPerson(person.getUserId());
+        if (findPerson.isPresent()) {
+            log.error("Person already in database");
+            return person;
+        }
         return personRepository.save(person);
     }
 
@@ -33,7 +38,7 @@ public class FriendService {
     }
 
     public boolean addFriend(String personId, String friendId) {
-        
+
         Optional<Person> person = personRepository.findByUserId(personId);
 
         Optional<Person> friend = personRepository.findByUserId(friendId);

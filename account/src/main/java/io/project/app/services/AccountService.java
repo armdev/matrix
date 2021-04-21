@@ -5,6 +5,7 @@
  */
 package io.project.app.services;
 
+import io.project.app.account.httpclients.BrokerClient;
 import io.project.app.domain.Account;
 import io.project.app.api.requests.LoginRequest;
 import io.project.app.repositories.AccountRepository;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import io.project.app.api.requests.Device;
 import io.project.app.api.responses.ApiAccountResponse;
 import io.project.app.api.requests.RegisterRequest;
+import io.project.app.account.dto.PersonDTO;
 
 /**
  *
@@ -29,9 +31,12 @@ public class AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
-    
+
     @Autowired
     private AuthTokenService authTokenService;
+
+    @Autowired
+    private BrokerClient brokerClient;
 
     public Optional<Account> registerAccount(RegisterRequest registerRequest) {
         Optional<Account> existingAccount = accountRepository.findByEmail(registerRequest.getEmail());
@@ -42,6 +47,9 @@ public class AccountService {
             newAccount.setPassword(registerRequest.getPassword());
             newAccount.setName(registerRequest.getName());
             Account save = accountRepository.save(newAccount);
+
+            PersonDTO personDTO = new PersonDTO(save.getName(), save.getEmail(), save.getId());
+            brokerClient.sendUser(personDTO);
             return Optional.ofNullable(save);
         }
         return Optional.empty();
@@ -50,9 +58,9 @@ public class AccountService {
     public Optional<ApiAccountResponse> doLogin(LoginRequest loginRequest) {
 
         Optional<Account> account = accountRepository.findByEmailAndPassword(loginRequest.getEmail(), PasswordHashUtil.hashPassword(loginRequest.getPassword(),
-                loginRequest.getPassword()));        
-        
-        if (account.isPresent()) {            
+                loginRequest.getPassword()));
+
+        if (account.isPresent()) {
             String generateToken = authTokenService.generateToken(account.get(), new Device(true, false, false));
             ApiAccountResponse apiAccountResponse = new ApiAccountResponse();
             apiAccountResponse.setToken(generateToken);

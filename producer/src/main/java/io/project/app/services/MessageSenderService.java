@@ -22,7 +22,7 @@ public class MessageSenderService {
     public Flux<String> send(String message) {
         log.info("Send to channel " + message);
 
-        return externalRequester.route("msend").data(message + "-" + System.currentTimeMillis()).retrieveFlux(String.class);
+        return externalRequester.route("msend").data(message).retrieveFlux(String.class);
 
     }
 

@@ -13,6 +13,7 @@ import java.util.Optional;
 import io.project.app.api.responses.ApiAccountResponse;
 import io.project.app.domain.Account;
 import io.project.app.services.AccountDataProviderService;
+import java.util.List;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,6 +66,23 @@ public class AccountDataProvider {
         }
 
         return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(("Could not find user"));
+    }
+
+    @GetMapping(path = "/find/all/accounts", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @CrossOrigin
+    @Transactional
+    public ResponseEntity<?> findAll() {
+
+        List<Account> findAll = accountDataProviderService.getAllUsers();
+        if (!findAll.isEmpty()) {
+            ApiAccountResponse apiAccountResponse = new ApiAccountResponse();
+            apiAccountResponse.getAccountList().addAll(findAll);
+            log.info("Get all users done success");
+            return ResponseEntity.status(HttpStatus.OK).body(apiAccountResponse);
+        }
+
+        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(("Could not find account list"));
     }
 
 }

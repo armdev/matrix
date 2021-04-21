@@ -59,9 +59,10 @@ public class PersonResource {
     @PostMapping(path = "/person/add", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     @Timed
-    public ResponseEntity<?> post(@RequestBody PersonDTO personDTO, @RequestHeader(name = "Authorization") String token
+    public ResponseEntity<?> post(@RequestBody PersonDTO personDTO,
+            @RequestHeader(name = "Authorization", required = false) String token
     ) {
-        log.info("Add New Person");
+        log.info("Add New Person, received");
         Optional<Person> account = friendService.findPersonByEmail(personDTO.getEmail());
 
         if (account.isPresent()) {
@@ -69,7 +70,7 @@ public class PersonResource {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(account.get());
         }
 
-        Person addAccount = friendService.addAccount(new Person(personDTO.getName(), personDTO.getEmail()));
+        Person addAccount = friendService.addAccount(new Person(personDTO.getUserId(), personDTO.getName(), personDTO.getEmail()));
 
         if (addAccount.getId() != null) {
             return ResponseEntity.status(HttpStatus.CREATED).body(addAccount);

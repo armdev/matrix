@@ -53,12 +53,12 @@ public class AccountValidationClient implements Serializable {
         LOGGER.info("Find user by email " + email);
         ApiAccountResponse model = new ApiAccountResponse();
         long startTime = System.currentTimeMillis();
-        try ( CloseableHttpClient httpClient = HttpClients.createDefault()) {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(service_path + "/find/email?email=" + email);
             request.addHeader("charset", "UTF-8");
             request.addHeader("content-type", FrontendConstants.CONTENT_TYPE_JSON);
             request.addHeader("Authorization", sessionContext.getSessionToken());
-            try ( CloseableHttpResponse httpResponse = httpClient.execute(request)) {
+            try (CloseableHttpResponse httpResponse = httpClient.execute(request)) {
                 LOGGER.info("Status code " + httpResponse.getStatusLine().getStatusCode());
                 if (httpResponse.getStatusLine().getStatusCode() == 200) {
                     Type listType = new TypeToken<ApiAccountResponse>() {
@@ -73,17 +73,17 @@ public class AccountValidationClient implements Serializable {
         }
         return model;
     }
-    
-     public ApiAccountResponse getAccountById(String id) {
+
+    public ApiAccountResponse getAccountById(String id) {
         LOGGER.info("Find user by id " + id);
         ApiAccountResponse model = new ApiAccountResponse();
         long startTime = System.currentTimeMillis();
-        try ( CloseableHttpClient httpClient = HttpClients.createDefault()) {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(service_path + "/find/by/id?id=" + id);
             request.addHeader("charset", "UTF-8");
             request.addHeader("content-type", FrontendConstants.CONTENT_TYPE_JSON);
             request.addHeader("Authorization", sessionContext.getSessionToken());
-            try ( CloseableHttpResponse httpResponse = httpClient.execute(request)) {
+            try (CloseableHttpResponse httpResponse = httpClient.execute(request)) {
                 LOGGER.info("Status code " + httpResponse.getStatusLine().getStatusCode());
                 if (httpResponse.getStatusLine().getStatusCode() == 200) {
                     Type listType = new TypeToken<ApiAccountResponse>() {
@@ -93,6 +93,31 @@ public class AccountValidationClient implements Serializable {
             }
             long elapsedTime = System.currentTimeMillis() - startTime;
             LOGGER.info("Find user by id request/response time in milliseconds: " + elapsedTime);
+        } catch (IOException e) {
+            LOGGER.error("Exception caught.", e);
+        }
+        return model;
+    }
+
+    public ApiAccountResponse getAllAccounts() {
+
+        ApiAccountResponse model = new ApiAccountResponse();
+        long startTime = System.currentTimeMillis();
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpGet request = new HttpGet(service_path + "/find/all/accounts");
+            request.addHeader("charset", "UTF-8");
+            request.addHeader("content-type", FrontendConstants.CONTENT_TYPE_JSON);
+            request.addHeader("Authorization", sessionContext.getSessionToken());
+            try (CloseableHttpResponse httpResponse = httpClient.execute(request)) {
+                LOGGER.info("AllAccounts Status code " + httpResponse.getStatusLine().getStatusCode());
+                if (httpResponse.getStatusLine().getStatusCode() == 200) {
+                    Type listType = new TypeToken<ApiAccountResponse>() {
+                    }.getType();
+                    model = FrontendGsonConverter.fromWithDateTime().fromJson(EntityUtils.toString(httpResponse.getEntity()), listType);
+                }
+            }
+            long elapsedTime = System.currentTimeMillis() - startTime;
+            LOGGER.info("Find all accounts: request/response time in milliseconds: " + elapsedTime);
         } catch (IOException e) {
             LOGGER.error("Exception caught.", e);
         }

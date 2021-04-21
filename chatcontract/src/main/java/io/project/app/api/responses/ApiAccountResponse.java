@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import io.project.app.domain.Account;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -24,7 +26,6 @@ public class ApiAccountResponse implements Serializable {
     private Account account = new Account();
 
     private String token;
-    
-    
+    private List<Account> accountList = new ArrayList<>();
 
 }
