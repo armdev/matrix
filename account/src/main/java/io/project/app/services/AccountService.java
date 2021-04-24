@@ -38,7 +38,7 @@ public class AccountService {
     @Autowired
     private BrokerClient brokerClient;
 
-    public Optional<Account> registerAccount(RegisterRequest registerRequest) {
+    public Optional<Account> registerAccount(RegisterRequest registerRequest) throws Exception {
         Optional<Account> existingAccount = accountRepository.findByEmail(registerRequest.getEmail());
         if (!existingAccount.isPresent()) {
             registerRequest.setPassword(PasswordHashUtil.hashPassword(registerRequest.getPassword(), registerRequest.getPassword()));

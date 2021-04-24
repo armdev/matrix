@@ -53,7 +53,7 @@ public class AccountController {
     @Transactional
     public ResponseEntity<?> register(
             @RequestBody(required = true) RegisterRequest registerRequest
-    ) {
+    ) throws Exception {
 
         Optional<Account> doRegister = accountService.registerAccount(registerRequest);
         if (doRegister.isPresent()) {
@@ -65,7 +65,5 @@ public class AccountController {
 
         return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(("Could not register user"));
     }
-    
- 
 
 }

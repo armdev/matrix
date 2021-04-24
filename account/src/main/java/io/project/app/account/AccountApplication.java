@@ -11,6 +11,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -24,6 +25,7 @@ import org.springframework.web.filter.CorsFilter;
 @EnableDiscoveryClient
 @EnableEurekaClient
 @Slf4j
+@EnableRetry
 public class AccountApplication {
 
     public static void main(String[] args) {

@@ -47,17 +47,5 @@ public class GatewayApplication {
                 )
                 .build();
     }
-    
-    @Bean
-    public RouteLocator toProducer(RouteLocatorBuilder builder) {
-        log.info("Request to producer");
-        return builder.routes()
-                .route("producerroute", r -> r
-                .path("/producer/api/**")
-                .filters(f -> f.stripPrefix(1))
-                .uri("lb://producer/")
-                )
-                .build();
-    }
 
 }

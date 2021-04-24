@@ -8,7 +8,6 @@ package io.project.app.services.httpclients;
 import com.google.gson.Gson;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
-import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -19,17 +18,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import io.project.app.broker.dto.PersonDTO;
-import java.net.UnknownHostException;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 
-/**
- *
- * @author root
- */
 @Service
 @Slf4j
-public class BrokerClient {
+public class FriendHttpClient {
 
     @Autowired
     private EurekaClient discoveryClient;
@@ -44,17 +38,17 @@ public class BrokerClient {
         PersonDTO person = gson.fromJson(request, PersonDTO.class);
         final HttpHeaders headers = new HttpHeaders();
         headers.add("client", "broker");
-        String baseUrl = "http://friend:9090/api/v2/people/person/add";
-        ///final String baseUrl = this.getFriendUrl("/api/v2/people/person/add");
+        ///String baseUrl = "http://friend:9090/api/v2/people/person/add";
+        final String baseUrl = this.getFriendUrl("/api/v2/people/person/add");
         final String url = UriComponentsBuilder.fromUriString(baseUrl)
                 .toUriString();
 
 //        final Try<ResponseEntity<String>> response = Try.of(()
 //                -> this.restTemplate.exchange(url, HttpMethod.POST, new HttpEntity(person, headers), String.class));
-        log.info("Try to send !");
+        log.info("Try to send, if error !");
         ResponseEntity<String> exchange = this.restTemplate.exchange(url, HttpMethod.POST, new HttpEntity(person, headers), String.class);
 
-        log.error("Status " + exchange.getStatusCode().toString());
+        log.info("Status " + exchange.getStatusCode().toString());
         /// log.info("Registered user sent to friend db");
         ///return true;
     }
@@ -68,7 +62,6 @@ public class BrokerClient {
             if (instance == null || instance.getHomePageUrl() == null || instance.getPort() == 8080) {
                 return defaultUrl;
             }
-
             return String.format("%s%s", instance.getHomePageUrl(), api);
         } catch (Exception e) {
             log.error("Error from  MS:!! " + e.getLocalizedMessage());

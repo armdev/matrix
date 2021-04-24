@@ -7,7 +7,6 @@ package io.project.app.account.httpclients;
 
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
-import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -18,6 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import io.project.app.account.dto.PersonDTO;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.scheduling.annotation.Async;
 
 /**
  *
@@ -33,7 +35,9 @@ public class BrokerClient {
     @Autowired
     private RestTemplate restTemplate;
 
-    public boolean sendUser(PersonDTO request) {
+    @Retryable(value = {Exception.class}, maxAttempts = 20, backoff = @Backoff(delay = 3000))
+    @Async
+    public void sendUser(PersonDTO request) throws Exception {
         final HttpHeaders headers = new HttpHeaders();
         headers.add("client", "account");
         log.info("Sending registered user to hell");
@@ -42,24 +46,21 @@ public class BrokerClient {
         final String url = UriComponentsBuilder.fromUriString(baseUrl)
                 .toUriString();
 
-        final Try<ResponseEntity<PersonDTO>> response = Try.of(()
-                -> this.restTemplate.exchange(url, HttpMethod.POST, new HttpEntity(request, headers), PersonDTO.class));
+//        final Try<ResponseEntity<PersonDTO>> response = Try.of(()
+//                -> this.restTemplate.exchange(url, HttpMethod.POST, new HttpEntity(request, headers), PersonDTO.class));
+        log.info("Sending to broker again if fail or error");
+        ResponseEntity<PersonDTO> exchange = this.restTemplate.exchange(url, HttpMethod.POST, new HttpEntity(request, headers), PersonDTO.class);
 
-        if (response.isFailure()) {
-            log.error("Send data to broker failed: " + response.getCause().getLocalizedMessage());
-            return false;
-        }
+        log.error("Status " + exchange.getStatusCode().toString());
 
-        log.info("Registered user sent to neo db");
-        return true;
     }
 
     private String getBrokerURl(final String api) {
 
-        final String defaultUrl = "http://producer:9092/" + api;
+        final String defaultUrl = "http://broker:9092/" + api;
 
         try {
-            final InstanceInfo instance = this.discoveryClient.getNextServerFromEureka("producer", false);
+            final InstanceInfo instance = this.discoveryClient.getNextServerFromEureka("broker", false);
             if (instance == null || instance.getHomePageUrl() == null || instance.getPort() == 8080) {
                 return defaultUrl;
             }

@@ -147,10 +147,10 @@ services:
     networks:
      - mnet
      
-  producer:
-    image: producer
-    build: ./producer
-    container_name: producer
+  broker:
+    image: broker
+    build: ./broker
+    container_name: broker
     deploy:
       restart_policy:
         condition: on-failure
@@ -164,7 +164,7 @@ services:
     ports:
       - '9092:9092'
     volumes:
-      - /opt/producer/logs/:/opt/producer/logs
+      - /opt/broker/logs/:/opt/broker/logs
     networks:
       - mnet
       

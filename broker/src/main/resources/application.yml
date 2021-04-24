@@ -34,12 +34,12 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: producer
+    name: broker
     
     
   cloud:
     discovery:
-       service-id: producer
+       service-id: broker
        enabled: true
     gateway:
       httpclient:
@@ -72,8 +72,8 @@ eureka:
     service-url:
       defaultZone: http://admin:admin@eureka:8761/eureka/
   instance:
-    appname: producer
-    instanceId: producer:${spring.application.instance-id:${random.value}}
+    appname: broker
+    instanceId: broker:${spring.application.instance-id:${random.value}}
     lease-renewal-interval-in-seconds: 5
     lease-expiration-duration-in-seconds: 10
     status-page-url-path: ${management.endpoints.web.base-path}/info

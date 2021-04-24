@@ -1,4 +1,4 @@
-package io.project.app.producer;
+package io.project.app.broker.main;
 
 import org.springframework.context.annotation.Configuration;
 

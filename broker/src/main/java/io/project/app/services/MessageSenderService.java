@@ -20,10 +20,8 @@ public class MessageSenderService {
     }
 
     public Flux<String> send(String message) {
-        log.info("Send to channel " + message);
-
+        log.info("Send: " + message);
         return externalRequester.route("msend").data(message).retrieveFlux(String.class);
-
     }
 
 

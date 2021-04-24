@@ -10,7 +10,7 @@
         <module>gateway</module> 
         <module>friend</module> 
         <module>account</module> 
-        <module>producer</module>
+        <module>broker</module>
         <module>chat</module>      
     </modules>
     <properties>
