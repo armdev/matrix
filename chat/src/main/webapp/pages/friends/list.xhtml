@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Lists</ui:define>
+                
+    <ui:param name="viewname" value="LISTS" />
+
+    <ui:define name="content">
+        <div class="p-grid list-demo">
+            <div class="p-col-12">
+                <div class="card">
+                    <h5>Persons</h5>
+                    <p:dataView var="list" value="#{friendListBean.personList}" gridIcon="pi pi-th-large" listIcon="pi pi-bars"
+                        paginator="true" rows="10" layout="grid" paginatorPosition="bottom">
+                        <p:dataViewGridItem>
+                            <div class="product-grid-item card">
+                                <div class="product-grid-item-top">
+                                    <div>
+                                        <i class="pi pi-tag product-category-icon"></i>
+                                        <span class="product-category">#{list.name}</span>
+                                    </div>
+                                    <span class="product-badge">#{list.email}</span>
+                                </div>
+                                <div class="product-grid-item-content">
+                                      <p:graphicImage value="/resources/male.jpeg"
+                                                        rendered="#{list.avatarId == null}"
+                                                        width="120px" height="120px"/>
+                                       <p:graphicImage url="/PreviewImage?fileId=#{list.avatarId}"
+                                                        rendered="#{list.avatarId != null}"
+                                                        width="120px" height="120px"/>
+                                
+                                  
+                                </div>
+                                <div class="product-grid-item-bottom">
+                                 
+                                </div>
+                            </div>
+                        </p:dataViewGridItem>
+                
+                        <p:dataViewListItem>
+                            <div class="product-list-item">
+                                 <p:graphicImage value="/resources/male.jpeg"
+                                                        rendered="#{list.avatarId == null}"
+                                                        width="120px" height="120px"/>
+                                       <p:graphicImage url="/PreviewImage?fileId=#{list.avatarId}"
+                                                        rendered="#{list.avatarId != null}"
+                                                        width="120px" height="120px"/>
+                                <div class="product-list-detail">
+                                    <div class="product-name">#{list.name}</div>
+                                    <div class="product-description">#{list.email}</div>
+                                 
+                                </div>
+                              
+                            </div>
+                        </p:dataViewListItem>
+                    </p:dataView>
+                </div>
+            </div>
+
+         
+    </ui:define>
+
+</ui:composition>

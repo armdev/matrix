@@ -3,23 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.project.neo4j.domain;
+package io.project.app.http.clients.friends;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
-import org.springframework.data.neo4j.core.schema.GeneratedValue;
-import org.springframework.data.neo4j.core.schema.Id;
-import org.springframework.data.neo4j.core.schema.Node;
-import org.springframework.data.neo4j.core.schema.Relationship;
+import lombok.NoArgsConstructor;
 
-@Node("person")
 @Data
+@NoArgsConstructor
 public class Person implements Serializable {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
     private String userId;
@@ -30,7 +25,6 @@ public class Person implements Serializable {
 
     private String email;
 
-    @Relationship(type = "friend", direction = Relationship.Direction.OUTGOING)
     public List<Friend> friends = new ArrayList<>();
 
     public Person(String name, String email) {

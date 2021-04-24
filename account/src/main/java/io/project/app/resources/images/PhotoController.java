@@ -43,7 +43,7 @@ public class PhotoController {
     public ResponseEntity<?> put(
             @RequestHeader(name = "Authorization") String token,
             @RequestBody(required = true) FileRequest fileDTO
-    ) {
+    ) throws Exception {
 
         // decode file byte array 
         final byte[] backToBytes = Base64.decodeBase64(fileDTO.getFileContent());

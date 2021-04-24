@@ -10,16 +10,17 @@
         <div class="layout-menu-container">
             <h:form id="sidebar-form">
                 <d:menu widgetVar="diamondMenuWidget">
-                  
+
                     <p:submenu id="om_components" label="Chat Dashboard" icon="pi pi-star">
+                        <p:menuitem id="om_formlayouts" value="New Accounts" icon="pi pi-id-card" outcome="/pages/friends/list" />
                         <p:menuitem id="om_formlayout" value="Chat" icon="pi pi-id-card" outcome="/pages/chat/chat" />
 
                     </p:submenu>
                     <p:separator />
-                    
+
                     <p:submenu id="profile" label="Profile" icon="fa fa-fw fa-code">
                         <p:menuitem id="send" value="Open profile"  icon="fa fa-pencil" outcome="/pages/profile/profile" />
-                       
+
 
                     </p:submenu>
 

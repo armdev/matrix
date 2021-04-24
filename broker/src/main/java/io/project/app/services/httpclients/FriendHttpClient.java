@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package io.project.app.services.httpclients;
 
 import com.google.gson.Gson;
@@ -38,6 +33,7 @@ public class FriendHttpClient {
         PersonDTO person = gson.fromJson(request, PersonDTO.class);
         final HttpHeaders headers = new HttpHeaders();
         headers.add("client", "broker");
+        headers.add("action", "addaccount");
         ///String baseUrl = "http://friend:9090/api/v2/people/person/add";
         final String baseUrl = this.getFriendUrl("/api/v2/people/person/add");
         final String url = UriComponentsBuilder.fromUriString(baseUrl)
@@ -51,6 +47,26 @@ public class FriendHttpClient {
         log.info("Status " + exchange.getStatusCode().toString());
         /// log.info("Registered user sent to friend db");
         ///return true;
+    }
+
+    @Retryable(value = {Exception.class}, maxAttempts = 10, backoff = @Backoff(delay = 3000))
+    public void updateAvatar(String request) throws Exception {
+        log.info("Start to avatar update !");
+        Gson gson = new Gson();
+        PersonDTO person = gson.fromJson(request, PersonDTO.class);
+        final HttpHeaders headers = new HttpHeaders();
+        headers.add("client", "broker");
+        headers.add("action", "avatarupdate");
+
+        final String baseUrl = this.getFriendUrl("/api/v2/people/person/update/avatar");
+        final String url = UriComponentsBuilder.fromUriString(baseUrl)
+                .toUriString();
+
+        log.info("Try to send, if error !");
+        ResponseEntity<String> exchange = this.restTemplate.exchange(url, HttpMethod.POST, new HttpEntity(person, headers), String.class);
+
+        log.info("Status " + exchange.getStatusCode().toString());
+
     }
 
     private String getFriendUrl(final String api) {
@@ -67,7 +83,6 @@ public class FriendHttpClient {
             log.error("Error from  MS:!! " + e.getLocalizedMessage());
             log.error("Exception hapened, service unreachable");
         }
-
         return defaultUrl;
     }
 

@@ -40,6 +40,7 @@ public class BrokerClient {
     public void sendUser(PersonDTO request) throws Exception {
         final HttpHeaders headers = new HttpHeaders();
         headers.add("client", "account");
+        headers.add("action", "addaccount");
         log.info("Sending registered user to hell");
 
         final String baseUrl = this.getBrokerURl("/api/v2/friends/send");
@@ -48,6 +49,25 @@ public class BrokerClient {
 
 //        final Try<ResponseEntity<PersonDTO>> response = Try.of(()
 //                -> this.restTemplate.exchange(url, HttpMethod.POST, new HttpEntity(request, headers), PersonDTO.class));
+        log.info("Sending to broker again if fail or error");
+        ResponseEntity<PersonDTO> exchange = this.restTemplate.exchange(url, HttpMethod.POST, new HttpEntity(request, headers), PersonDTO.class);
+
+        log.error("Status " + exchange.getStatusCode().toString());
+
+    }
+
+    @Retryable(value = {Exception.class}, maxAttempts = 20, backoff = @Backoff(delay = 3000))
+    @Async
+    public void updateAvatar(PersonDTO request) throws Exception {
+        final HttpHeaders headers = new HttpHeaders();
+        headers.add("client", "account");
+        headers.add("action", "updateavatar");
+        log.info("Sending registered user to hell");
+
+        final String baseUrl = this.getBrokerURl("/api/v2/friends/send");
+        final String url = UriComponentsBuilder.fromUriString(baseUrl)
+                .toUriString();
+
         log.info("Sending to broker again if fail or error");
         ResponseEntity<PersonDTO> exchange = this.restTemplate.exchange(url, HttpMethod.POST, new HttpEntity(request, headers), PersonDTO.class);
 

@@ -47,7 +47,6 @@ public class AccountService {
             newAccount.setPassword(registerRequest.getPassword());
             newAccount.setName(registerRequest.getName());
             Account save = accountRepository.save(newAccount);
-
             PersonDTO personDTO = new PersonDTO(save.getName(), save.getEmail(), save.getId());
             brokerClient.sendUser(personDTO);
             return Optional.ofNullable(save);
@@ -56,7 +55,6 @@ public class AccountService {
     }
 
     public Optional<ApiAccountResponse> doLogin(LoginRequest loginRequest) {
-
         Optional<Account> account = accountRepository.findByEmailAndPassword(loginRequest.getEmail(), PasswordHashUtil.hashPassword(loginRequest.getPassword(),
                 loginRequest.getPassword()));
 

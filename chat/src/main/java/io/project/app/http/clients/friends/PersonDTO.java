@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.project.neo4j.dto;
+package io.project.app.http.clients.friends;
 
 import java.io.Serializable;
 import lombok.Data;
@@ -16,14 +16,7 @@ public class PersonDTO implements Serializable {
     private String name;
     private String email;
     private String userId;
-    private String avatarId;
 
-    public PersonDTO(String name, String email, String userId, String avatarId) {
-        this.name = name;
-        this.email = email;
-        this.userId = userId;
-        this.avatarId = avatarId;
-    }
 
     public PersonDTO(String name, String email, String userId) {
         this.name = name;

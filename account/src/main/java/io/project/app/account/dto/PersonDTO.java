@@ -16,11 +16,19 @@ public class PersonDTO implements Serializable {
     private String name;
     private String email;
     private String userId;
+    private String avatarId;
 
     public PersonDTO(String name, String email, String userId) {
         this.name = name;
         this.email = email;
         this.userId = userId;
+    }
+
+    public PersonDTO(String name, String email, String userId, String avatarId) {
+        this.name = name;
+        this.email = email;
+        this.userId = userId;
+        this.avatarId = avatarId;
     }
 
 }

@@ -5,8 +5,11 @@
  */
 package io.project.app.services;
 
+import io.project.app.account.dto.PersonDTO;
+import io.project.app.account.httpclients.BrokerClient;
 import io.project.app.domain.Photo;
 import io.project.app.api.requests.FileRequest;
+import io.project.app.domain.Account;
 import io.project.app.repositories.PhotoRepository;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
@@ -25,13 +28,24 @@ public class PhotoService {
     @Autowired
     private PhotoRepository photoRepo;
 
-    public String addPhoto(Photo photo) {
+    @Autowired
+    private BrokerClient brokerClient;
+    @Autowired
+    private ProfileService profileService;
+
+    public String addPhoto(Photo photo) throws Exception {
         Optional<Photo> userFile = photoRepo.findByUserId(photo.getUserId());
         if (userFile.isPresent()) {
             log.info("We will remove old user file");
             photoRepo.delete(userFile.get());
         }
         photo = photoRepo.insert(photo);
+        Optional<Account> findAccount = profileService.findAccount(photo.getUserId());
+        if (findAccount.isPresent()) {
+            PersonDTO personDTO = new PersonDTO(findAccount.get().getName(), findAccount.get().getEmail(), findAccount.get().getId(), photo.getId());
+            brokerClient.updateAvatar(personDTO);
+        }
+
         return photo.getId();
     }
 

@@ -79,6 +79,27 @@ public class PersonResource {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Did not find account for update");
     }
 
+    @PostMapping(path = "/person/update/avatar", produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    @Timed
+    public ResponseEntity<?> update(@RequestBody PersonDTO personDTO,
+            @RequestHeader(name = "Authorization", required = false) String token
+    ) {
+        log.info("Update New Person, received");
+        Optional<Person> account = friendService.findPersonByEmail(personDTO.getEmail());
+
+        if (account.isPresent()) {
+            log.info("Person already exist, we can update avatar");
+            Person person = account.get();
+            person.setAvatarId(personDTO.getAvatarId());
+            friendService.updateAvatar(person);
+            return ResponseEntity.status(HttpStatus.OK).body(account.get());
+        }
+        log.error("Person does not exist for update avatar");
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Did not find account for update");
+    }
+
     @PostMapping(path = "/person/add/friend", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     @Timed

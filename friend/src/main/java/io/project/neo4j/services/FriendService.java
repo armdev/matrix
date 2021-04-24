@@ -24,6 +24,16 @@ public class FriendService {
         }
         return personRepository.save(person);
     }
+    
+    
+    public Person updateAvatar(Person person) {
+        Optional<Person> findPerson = this.findPerson(person.getUserId());
+        if (findPerson.isPresent()) {
+            log.error("Person already in database");
+            return person;
+        }
+        return personRepository.save(person);
+    }
 
     public Optional<Person> findPerson(String personId) {
         return personRepository.findByUserId(personId);
