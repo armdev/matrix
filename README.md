@@ -16,4 +16,4 @@ Neo4J: http://localhost:7474/browser/
 What is working:
 User register, login, avatar update, send user data to neo4j, avatar update
 
-![alt text](https://github.com/armdev/matrix/images/socnet.png)
+![alt text](https://github.com/armdev/matrix/images/socnet.PNG)
