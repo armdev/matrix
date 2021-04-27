@@ -35,7 +35,7 @@ public class PersonResource {
     public ResponseEntity<?> get(@RequestParam(required = true) String personId,
             @RequestHeader(name = "Authorization") String token
     ) {
-        log.info("find person by id");
+        log.info("API: person/one");
         Optional<Person> account = friendService.findPerson(personId);
         if (account.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(account.get());
@@ -62,7 +62,7 @@ public class PersonResource {
     public ResponseEntity<?> post(@RequestBody PersonDTO personDTO,
             @RequestHeader(name = "Authorization", required = false) String token
     ) {
-        log.info("Add New Person, received");
+        log.info("API: person/add");
         Optional<Person> account = friendService.findPersonByEmail(personDTO.getEmail());
 
         if (account.isPresent()) {
@@ -85,15 +85,17 @@ public class PersonResource {
     public ResponseEntity<?> update(@RequestBody PersonDTO personDTO,
             @RequestHeader(name = "Authorization", required = false) String token
     ) {
-        log.info("Update New Person, received");
+        log.info("API: person/update/avatar");
         Optional<Person> account = friendService.findPersonByEmail(personDTO.getEmail());
 
         if (account.isPresent()) {
-            log.info("Person already exist, we can update avatar");
+            log.info("Avatar: Person already exist, we can update avatar!!!");
             Person person = account.get();
+            log.info("Avatar id set " + personDTO.getAvatarId());
             person.setAvatarId(personDTO.getAvatarId());
-            friendService.updateAvatar(person);
-            return ResponseEntity.status(HttpStatus.OK).body(account.get());
+            Person updateAvatar = friendService.updateAvatar(person);
+            log.info("Person after update " + updateAvatar.toString());
+            return ResponseEntity.status(HttpStatus.OK).body(updateAvatar);
         }
         log.error("Person does not exist for update avatar");
 
@@ -106,6 +108,7 @@ public class PersonResource {
     public ResponseEntity<?> join(@RequestParam(required = true) String personId,
             @RequestParam(required = true) String friendId, @RequestHeader(name = "Authorization") String token
     ) {
+        log.info("API: person/add/friend");
 
         boolean addFriend = friendService.addFriend(personId, friendId);
 

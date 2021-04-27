@@ -24,15 +24,16 @@ public class FriendService {
         }
         return personRepository.save(person);
     }
-    
-    
+
     public Person updateAvatar(Person person) {
         Optional<Person> findPerson = this.findPerson(person.getUserId());
         if (findPerson.isPresent()) {
-            log.error("Person already in database");
-            return person;
+            log.info("Person already in database, update avatar");
+            return personRepository.save(person);
+
         }
-        return personRepository.save(person);
+        log.error("Did not found user for update avatar");
+        return person;
     }
 
     public Optional<Person> findPerson(String personId) {

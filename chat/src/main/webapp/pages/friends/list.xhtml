@@ -6,62 +6,88 @@
                 template="/WEB-INF/template.xhtml">
 
     <ui:define name="title">Lists</ui:define>
-                
+
     <ui:param name="viewname" value="LISTS" />
 
     <ui:define name="content">
-        <div class="p-grid list-demo">
-            <div class="p-col-12">
-                <div class="card">
-                    <h5>Persons</h5>
-                    <p:dataView var="list" value="#{friendListBean.personList}" gridIcon="pi pi-th-large" listIcon="pi pi-bars"
-                        paginator="true" rows="10" layout="grid" paginatorPosition="bottom">
-                        <p:dataViewGridItem>
-                            <div class="product-grid-item card">
-                                <div class="product-grid-item-top">
-                                    <div>
-                                        <i class="pi pi-tag product-category-icon"></i>
-                                        <span class="product-category">#{list.name}</span>
+        <h:form>
+
+
+            <div class="p-grid list-demo">
+                <div class="p-col-12">
+                    <div class="card">
+                        <h5>Persons</h5>
+                        <p:dataView var="list" value="#{friendListBean.personList}" rows="50" paginator="true"
+                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                    gridIcon="pi pi-th-large" listIcon="pi pi-bars" multiViewState="false"
+                                    layout="grid" gridRowStyleClass="p-lg-6 p-xl-4" flex="true">
+
+                            <p:dataViewGridItem>
+                                <div class="product-grid-item card">
+                                    <div class="product-grid-item-top">
+                                        <div>
+                                            <i class="pi pi-tag product-category-icon"></i>
+                                            <span class="product-category">#{list.name}</span>
+                                        </div>
+                                        <span class="product-badge">#{list.email}</span>
                                     </div>
-                                    <span class="product-badge">#{list.email}</span>
-                                </div>
-                                <div class="product-grid-item-content">
-                                      <p:graphicImage value="/resources/male.jpeg"
+                                    <div class="product-grid-item-content">
+                                        <p:graphicImage value="/resources/male.jpeg"
                                                         rendered="#{list.avatarId == null}"
-                                                        width="120px" height="120px"/>
-                                       <p:graphicImage url="/PreviewImage?fileId=#{list.avatarId}"
+                                                        />
+                                        <p:graphicImage url="/PreviewImage?fileId=#{list.avatarId}"
                                                         rendered="#{list.avatarId != null}"
-                                                        width="120px" height="120px"/>
-                                
-                                  
+                                                        width="200px" height="400px"/>
+
+
+                                    </div>
+                                    <div class="product-grid-item-bottom">
+                                        <p:commandButton type="button"
+                                                         value="Add Friend"
+                                                         icon="pi pi-user-plus"
+                                                         >
+                                             
+                                        </p:commandButton>
+                                    </div>
                                 </div>
-                                <div class="product-grid-item-bottom">
-                                 
+                            </p:dataViewGridItem>
+
+                            <p:dataViewListItem>
+
+                                <div class="product-list-item">
+                                    <p:graphicImage value="/resources/male.jpeg"
+                                                    rendered="#{list.avatarId == null}"
+                                                    />
+                                    <p:graphicImage url="/PreviewImage?fileId=#{list.avatarId}"
+                                                    rendered="#{list.avatarId != null}"
+                                                    />
+                                    <div class="product-list-detail">
+                                        <div class="product-name">#{list.name}</div>
+                                        <div class="product-description">#{list.email}</div>
+                                        <p:rating readonly="true" value="4"/>
+                                        <i class="pi pi-tag product-category-icon"/><span
+                                            class="product-category">Contact</span>
+                                    </div>
+                                    <div class="product-list-action">
+                                       
+                                        <p:commandButton 
+                                                         value="Add Friend"
+                                                          icon="pi pi-user-plus"
+                                                         >
+                                          
+                                        </p:commandButton>
+
+                                    </div>
                                 </div>
-                            </div>
-                        </p:dataViewGridItem>
-                
-                        <p:dataViewListItem>
-                            <div class="product-list-item">
-                                 <p:graphicImage value="/resources/male.jpeg"
-                                                        rendered="#{list.avatarId == null}"
-                                                        width="120px" height="120px"/>
-                                       <p:graphicImage url="/PreviewImage?fileId=#{list.avatarId}"
-                                                        rendered="#{list.avatarId != null}"
-                                                        width="120px" height="120px"/>
-                                <div class="product-list-detail">
-                                    <div class="product-name">#{list.name}</div>
-                                    <div class="product-description">#{list.email}</div>
-                                 
-                                </div>
-                              
-                            </div>
-                        </p:dataViewListItem>
-                    </p:dataView>
+
+
+                            </p:dataViewListItem>
+                        </p:dataView>
+                    </div>
                 </div>
             </div>
+        </h:form>
 
-         
     </ui:define>
 
 </ui:composition>

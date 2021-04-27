@@ -30,6 +30,9 @@ public class Person implements Serializable {
 
     private String email;
 
+    public Person() {
+    }
+
     @Relationship(type = "friend", direction = Relationship.Direction.OUTGOING)
     public List<Friend> friends = new ArrayList<>();
 

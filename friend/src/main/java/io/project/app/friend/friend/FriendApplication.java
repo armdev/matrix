@@ -48,7 +48,7 @@ public class FriendApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void init() {
-        // personRepository.deleteAll();
+      //  personRepository.deleteAll();
         log.info("DB URL IS " + db_url);
     }
 
