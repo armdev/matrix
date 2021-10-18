@@ -1,4 +1,4 @@
-FROM registry.gitlab.com/armdev/dockers/openjdk15
+FROM registry.gitlab.com/armdev/dockers/openjdk16
 COPY target/gateway.jar /opt/gateway.jar
 RUN useradd -ms /bin/sh mpaxele2050 \
     && echo "root:Docker!" | chpasswd \

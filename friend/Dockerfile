@@ -1,4 +1,4 @@
-FROM registry.gitlab.com/armdev/dockers/openjdk15
+FROM registry.gitlab.com/armdev/dockers/openjdk16
 
 COPY target/friend.jar /opt/friend.jar
 RUN useradd -ms /bin/sh mphic2050 \

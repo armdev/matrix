@@ -73,8 +73,10 @@ services:
   neo4j:
     environment:
       NEO4J_AUTH: none
-    image: neo4j:latest
+    #  HOST.URI: ${NEO4J_HOST_URI}
+    image: neo4j:4.2.0
     container_name: neo4j
+   # env_file: .env
     volumes:
       - ~/volumes/databases/neo4j/:/data
     ports:

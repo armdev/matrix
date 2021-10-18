@@ -9,8 +9,10 @@ fi
 
 mvn clean install -pl $1  -am -DskipTests=true
 
-docker-compose up -d --no-deps --build $1
+sudo docker rm -f $1
+#sudo docker rmi -f $1
+sudo docker-compose up -d --no-deps --build $1
 
-docker logs --follow $1
+sudo docker logs --follow $1
 
 

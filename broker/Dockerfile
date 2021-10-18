@@ -1,4 +1,4 @@
-FROM registry.gitlab.com/armdev/dockers/openjdk15
+FROM registry.gitlab.com/armdev/dockers/openjdk16
 COPY target/broker.jar /opt/broker.jar
 ENTRYPOINT ["java", "-XX:+UseZGC", "-XX:MinHeapSize=512M", "-XX:InitialHeapSize=1G", "-XX:MaxHeapSize=4G", \
             "-XX:ParallelGCThreads=100", "-XX:ConcGCThreads=30", \
