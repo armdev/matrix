@@ -1,5 +1,6 @@
 package io.project.app.broker.main;
 
+import brave.sampler.Sampler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
@@ -30,11 +31,15 @@ public class ProducerApplication {
         application.setWebApplicationType(WebApplicationType.REACTIVE);
         application.run(args);
     }
-    
 
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
+    }
+
+    @Bean
+    public Sampler sampler() {
+        return Sampler.ALWAYS_SAMPLE;
     }
 
 }

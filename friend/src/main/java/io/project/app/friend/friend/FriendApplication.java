@@ -1,5 +1,6 @@
 package io.project.app.friend.friend;
 
+import brave.sampler.Sampler;
 import io.project.neo4j.repository.PersonRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class FriendApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void init() {
-      //  personRepository.deleteAll();
+        //  personRepository.deleteAll();
         log.info("DB URL IS " + db_url);
     }
 
@@ -68,6 +69,11 @@ public class FriendApplication {
         config.addAllowedMethod("PATCH");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
+    }
+
+    @Bean
+    public Sampler sampler() {
+        return Sampler.ALWAYS_SAMPLE;
     }
 
     @Bean

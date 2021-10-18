@@ -1,5 +1,6 @@
 package io.project.app.gateway;
 
+import brave.sampler.Sampler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +24,13 @@ public class GatewayApplication {
         application.setWebApplicationType(WebApplicationType.REACTIVE);
         application.run(args);
     }
+    
+    
+    @Bean
+    public Sampler sampler() {
+        return Sampler.ALWAYS_SAMPLE;
+    }
+
 
     @Bean
     public RouteLocator toAccount(RouteLocatorBuilder builder) {

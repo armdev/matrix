@@ -32,6 +32,17 @@ spring:
        service-id: friend
        enabled: true
        
+       
+  zipkin:
+    baseUrl: http://zipkinnode:9411
+    enabled: true
+  sleuth:
+    enabled: true
+    http:
+      enabled: true   
+    sampler:
+    percentage: 1
+       
   servlet:
     multipart:
         max-file-size: 5MB
