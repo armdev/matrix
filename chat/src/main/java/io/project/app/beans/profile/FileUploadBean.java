@@ -1,6 +1,5 @@
 package io.project.app.beans.profile;
 
-
 import io.project.app.api.requests.FileRequest;
 import io.project.app.http.clients.account.AvatarUploadClient;
 import io.project.app.http.clients.account.ProfileUpdateClient;
@@ -93,6 +92,7 @@ public class FileUploadBean implements Serializable {
             String saveFile = avatarUploadClient.saveFile(fileDTO);
 
             if (saveFile != null) {
+                LOG.info("Avatar id is " + saveFile);
                 sessionContext.setAvatarId(saveFile);
                 sessionContext.getUser().setAvatarId(saveFile);
                 profileUpdateClient.updateAccountProfile(sessionContext.getUser());

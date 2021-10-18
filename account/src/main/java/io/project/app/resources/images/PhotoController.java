@@ -61,6 +61,7 @@ public class PhotoController {
 
         String savedFile = photoService.addPhoto(fileModel);
         if (savedFile != null) {
+            log.info("Saved file id " +savedFile);
             return ResponseEntity.status(HttpStatus.OK).body(savedFile);
         }
 

@@ -46,6 +46,7 @@ public class AccountService {
             newAccount.setEmail(registerRequest.getEmail());
             newAccount.setPassword(registerRequest.getPassword());
             newAccount.setName(registerRequest.getName());
+            newAccount.setAvatarId(null);
             Account save = accountRepository.save(newAccount);
             PersonDTO personDTO = new PersonDTO(save.getName(), save.getEmail(), save.getId());
             brokerClient.sendUser(personDTO);
@@ -63,6 +64,7 @@ public class AccountService {
             ApiAccountResponse apiAccountResponse = new ApiAccountResponse();
             apiAccountResponse.setToken(generateToken);
             apiAccountResponse.setAccount(account.get());
+            log.info("Login avatar id " +account.get().getAvatarId());
             return Optional.of(apiAccountResponse);
         }
 

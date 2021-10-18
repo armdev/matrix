@@ -46,6 +46,7 @@ public class ProfileController {
         if (account.getId() != null) {
             Optional<Account> findAccount = profileService.findAccount(account.getId());
             if (findAccount.isPresent()) {
+                log.info("Accpiunt update with avatar id " +account.getAvatarId());
                 final Account savedRecord = profileService.updateAccount(account);
                 return ResponseEntity.status(HttpStatus.OK).body(savedRecord);
             }
