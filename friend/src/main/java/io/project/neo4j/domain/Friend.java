@@ -16,6 +16,8 @@ import org.springframework.data.neo4j.core.schema.Id;
 @NoArgsConstructor
 public class Friend implements Serializable {
 
+    private static final long serialVersionUID = 5962773304041441276L;
+
     @Id
     private Long id;    
     private String userId;

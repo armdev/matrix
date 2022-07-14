@@ -18,6 +18,8 @@ import org.springframework.data.neo4j.core.schema.Relationship;
 @Data
 public class Person implements Serializable {
 
+    private static final long serialVersionUID = -1131983533558607046L;
+
     @Id
     @GeneratedValue
     private Long id;
